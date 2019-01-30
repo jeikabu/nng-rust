@@ -1,0 +1,27 @@
+language: rust
+rust:
+  - stable
+
+os:
+  - linux
+  - osx
+
+# Need travis full VM otherwise kcov fails
+sudo: required
+addons:
+  apt:
+    packages:
+      - cmake
+      - ninja-build
+
+before_script:
+  - rustup component add clippy
+  - rustup component add rustfmt
+
+script:
+  # Check source code formatting
+  - cargo fmt --all -- --check
+  #- cargo clippy
+  # Build everything (including optional packages)
+  - cargo build --all --all-targets
+  - RUST_BACKTRACE=1 cargo test

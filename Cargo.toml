@@ -1,11 +1,11 @@
 [package]
 name = "runng-sys"
-version = "1.1.1-rc.4"
+version = "0.5.0"
 authors = ["Jake W <jeikabu@gmail.com>"]
 
 description = "Bindings to nng (Nanomsg-Next-Generation) aka Nanomsg2"
-keywords = ["nng", "nanomsg", "zeromq"]
-categories = ["network-programming", "external-ffi-bindings", "os"]
+#keywords = ["nng", "nanomsg", "zeromq"]
+#categories = ["network-programming", "external-ffi-bindings", "os"]
 license = "MIT"
 repository = "https://github.com/jeikabu/runng"
 readme = "README.md"

@@ -1,13 +1,12 @@
 #[cfg(test)]
 mod tests {
 
-    use runng_sys::*;
+    use nng_sys::*;
     use std::{ffi::CString, ptr::null_mut};
 
-    #[test]
     fn example() {
         unsafe {
-            let url = CString::new("inproc://runng-sys/tests/example").unwrap();
+            let url = CString::new("inproc://nng_sys/tests/example").unwrap();
             let url = url.as_bytes_with_nul().as_ptr() as *const std::os::raw::c_char;
 
             // Reply socket
@@ -46,7 +45,7 @@ mod tests {
     #[test]
     fn basic() {
         unsafe {
-            let url = CString::new("inproc://runng-sys/tests/basic").unwrap();
+            let url = CString::new("inproc://nng_sys/tests/basic").unwrap();
             let url = url.as_bytes_with_nul().as_ptr() as *const std::os::raw::c_char;
 
             // Reply socket

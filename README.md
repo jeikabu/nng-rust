@@ -1,18 +1,22 @@
 
-# runng-sys
-
-Rust FFI bindings to [NNG](https://github.com/nanomsg/nng) (generated with [bindgen](https://rust-lang.github.io/rust-bindgen/introduction.html)):
+Rust FFI bindings to [NNG](https://github.com/nanomsg/nng):
 
 > NNG, like its predecessors nanomsg (and to some extent ZeroMQ), is a lightweight, broker-less library, offering a simple API to solve common recurring messaging problems, such as publish/subscribe, RPC-style request/reply, or service discovery. The API frees the programmer from worrying about details like connection management, retries, and other common considerations, so that they can focus on the application instead of the plumbing.
 
+[![docs.rs](https://docs.rs/nng-sys/badge.svg)](https://docs.rs/nng-sys)
+[![crates.io](http://img.shields.io/crates/v/nng-sys.svg)](http://crates.io/crates/nng-sys)
+![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Rustc 1.31+](https://img.shields.io/badge/rustc-1.31+-lightgray.svg)
+[![travis](https://travis-ci.org/jeikabu/nng-rust.svg?branch=master)](https://travis-ci.org/jeikabu/nng-rust)
+[![appveyor](https://ci.appveyor.com/api/projects/status/96x8onexj6vyxgjp/branch/master?svg=true)](https://ci.appveyor.com/project/jake-ruyi/nng-rust/branch/master)
 
 ## Usage
 
 Version of this crate tracks NNG: `<NNG_version>-rc.<crate_version>` (e.g. `1.1.1-rc.2`).
 
-To use the __latest crate__ for the most recent __stable version of NNG__ (1.1.1), in `Cargo.toml`:
+To use the __latest crate__ for the most recent __stable version of NNG__ (1.1.1), in `Cargo.toml`:  
 ```toml
-runng-sys = "1.1.1-rc"
+nng-sys = "1.1.1-rc"
 ```
 
 Requirements:
@@ -21,19 +25,18 @@ Requirements:
     - On Windows: default generator is [ninja](https://ninja-build.org/) and must also be in `PATH`
 - [libclang](https://rust-lang.github.io/rust-bindgen/requirements.html)
 
-For a more ergonomic API to NNG see [runng](https://crates.io/crates/runng).
-
 ## Features
 
+- `build-nng`: use cmake to build NNG from source (enabled by default)
 - `cmake-ninja`: use cmake generator "Ninja"
 - `cmake-vs2017`: use cmake generator "Visual Studio 15 2017"
 - `cmake-vs2017-win64`: use cmake generator "Visual Studio 15 2017 Win64"
 - `nng-stats`: enable NNG stats `NNG_ENABLE_STATS` (enabled by default)
-- `nng-tls`: enable TLS `NNG_ENABLE_TLS` (requires mbedTLS, disabled by default)
+- `nng-tls`: enable TLS `NNG_ENABLE_TLS` (requires mbedTLS)
 
-For example, to disable stats and use Ninja cmake generator:
+For example, to disable stats and use Ninja cmake generator, in your `Cargo.toml`:
 ```toml
-[dependencies.runng-sys]
+[dependencies.nng-sys]
 version = "1.1.1-rc"
 default-features = false
 features = ["cmake-ninja"]
@@ -41,13 +44,12 @@ features = ["cmake-ninja"]
 
 ## Examples
 ```rust
-use runng_sys::*;
+use nng_sys::*;
 use std::{ffi::CString, ptr::null_mut};
 
-#[test]
 fn example() {
     unsafe {
-        let url = CString::new("inproc://test").unwrap();
+        let url = CString::new("inproc://nng_sys/tests/example").unwrap();
         let url = url.as_bytes_with_nul().as_ptr() as *const std::os::raw::c_char;
 
         // Reply socket

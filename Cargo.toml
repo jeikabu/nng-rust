@@ -1,22 +1,23 @@
 [package]
-name = "runng-sys"
-version = "0.5.0"
-authors = ["Jake W <jeikabu@gmail.com>"]
+name = "nng-sys"
+version = "1.1.1-rc.1"
+authors = ["Nathan Kent <nate@nkent.net>", "Jake W <jeikabu@gmail.com>"]
 
-description = "Bindings to nng (Nanomsg-Next-Generation) aka Nanomsg2"
-#keywords = ["nng", "nanomsg", "zeromq"]
-#categories = ["network-programming", "external-ffi-bindings", "os"]
+description = "Bindings to NNG (Nanomsg-Next-Generation) aka Nanomsg2"
+keywords = ["nng", "nanomsg", "zeromq"]
+categories = ["network-programming", "external-ffi-bindings", "os"]
 license = "MIT"
-repository = "https://github.com/jeikabu/runng"
+repository = "https://github.com/jeikabu/nng-rust"
 readme = "README.md"
 edition = "2018"
 
 [badges]
-appveyor = { repository = "jake-ruyi/runng", branch = "master", service = "github" }
-travis-ci = { repository = "jeikabu/runng", branch = "master" }
+appveyor = { repository = "jake-ruyi/nng-rust", branch = "master", service = "github" }
+travis-ci = { repository = "jeikabu/nng-rust", branch = "master" }
 
 [features]
-default = ["nng-stats"]
+default = ["build-nng", "nng-stats"]
+build-nng = []
 # Cmake generators
 cmake-ninja = [] # Ninja
 cmake-vs2017 = [] # Visual Studio 15 2017
@@ -30,6 +31,9 @@ legacy-111-rc4 = []
 
 [dependencies]
 cty = "0.1"
+
+[patch.crates-io]
+cty = { git = 'https://github.com/jeikabu/cty' }
 
 [build-dependencies]
 cmake = "0.1"

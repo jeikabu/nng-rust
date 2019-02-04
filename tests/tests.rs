@@ -10,12 +10,12 @@ mod tests {
             let url = url.as_bytes_with_nul().as_ptr() as *const std::os::raw::c_char;
 
             // Reply socket
-            let mut rep_socket = nng_socket { id: 0 };
+            let mut rep_socket = nng_socket_s::default();
             nng_rep0_open(&mut rep_socket);
             nng_listen(rep_socket, url, null_mut(), 0);
 
             // Request socket
-            let mut req_socket = nng_socket { id: 0 };
+            let mut req_socket = nng_socket_s::default();
             nng_req0_open(&mut req_socket);
             nng_dial(req_socket, url, null_mut(), 0);
 
@@ -49,12 +49,12 @@ mod tests {
             let url = url.as_bytes_with_nul().as_ptr() as *const std::os::raw::c_char;
 
             // Reply socket
-            let mut rep_socket = nng_socket { id: 0 };
+            let mut rep_socket = nng_socket::default();
             assert_eq!(0, nng_rep0_open(&mut rep_socket));
             assert_eq!(0, nng_listen(rep_socket, url, std::ptr::null_mut(), 0));
 
             // Request socket
-            let mut req_socket = nng_socket { id: 0 };
+            let mut req_socket = nng_socket::default();
             assert_eq!(0, nng_req0_open(&mut req_socket));
             assert_eq!(0, nng_dial(req_socket, url, std::ptr::null_mut(), 0));
 

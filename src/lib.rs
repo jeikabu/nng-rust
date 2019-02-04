@@ -57,7 +57,6 @@ fn example() {
 // This matches bindgen::Builder output
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 
-#[cfg(not(feature = "legacy-111-rc4"))]
 impl nng_stat_type_enum {
     /// Converts value returned by [nng_stat_type](https://nanomsg.github.io/nng/man/v1.1.0/nng_stat_type.3) into `nng_stat_type_enum`.
     pub fn from_i32(value: i32) -> Option<nng_stat_type_enum> {
@@ -74,7 +73,6 @@ impl nng_stat_type_enum {
     }
 }
 
-#[cfg(not(feature = "legacy-111-rc4"))]
 impl nng_unit_enum {
     /// Converts value returned by [nng_stat_unit](https://nanomsg.github.io/nng/man/v1.1.0/nng_stat_unit.3) into `nng_unit_enum`.
     pub fn from_i32(value: i32) -> Option<nng_unit_enum> {
@@ -90,7 +88,6 @@ impl nng_unit_enum {
     }
 }
 
-#[cfg(not(feature = "legacy-111-rc4"))]
 impl nng_errno_enum {
     /// Converts value returned by NNG method into `error::Error`.
     #[allow(clippy::cyclomatic_complexity)]
@@ -136,7 +133,6 @@ impl nng_errno_enum {
     }
 }
 
-#[cfg(not(feature = "legacy-111-rc4"))]
 impl nng_pipe_ev {
     pub fn from_i32(value: i32) -> Option<nng_pipe_ev> {
         use nng_pipe_ev::*;

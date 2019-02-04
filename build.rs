@@ -1,5 +1,4 @@
 use cmake::Config;
-use std::{env, path::PathBuf};
 
 fn main() {
     #[cfg(feature = "build-nng")]

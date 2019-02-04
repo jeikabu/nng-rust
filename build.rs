@@ -4,8 +4,16 @@ fn main() {
     #[cfg(feature = "build-nng")]
     {
         let generator = generator();
-        let stats = if cfg!(feature = "nng-stats") { "ON" } else { "OFF" };
-        let tls = if cfg!(feature = "nng-tls") { "ON" } else { "OFF" };
+        let stats = if cfg!(feature = "nng-stats") {
+            "ON"
+        } else {
+            "OFF"
+        };
+        let tls = if cfg!(feature = "nng-tls") {
+            "ON"
+        } else {
+            "OFF"
+        };
 
         let dst = Config::new("nng")
             .generator(generator)
@@ -15,8 +23,14 @@ fn main() {
             .define("NNG_ENABLE_TLS", tls)
             .build();
 
-        println!("cargo:rustc-link-search=native={}", dst.join("lib").display());
-        println!("cargo:rustc-link-search=native={}", dst.join("lib64").display());
+        println!(
+            "cargo:rustc-link-search=native={}",
+            dst.join("lib").display()
+        );
+        println!(
+            "cargo:rustc-link-search=native={}",
+            dst.join("lib64").display()
+        );
         println!("cargo:rustc-link-lib=static=nng");
     }
     #[cfg(not(feature = "build-nng"))]

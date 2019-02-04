@@ -21,9 +21,8 @@ nng-sys = "1.1.1-rc"
 
 Requirements:
 - [cmake](https://cmake.org/) in `PATH`
-    - On Linux/macOS: default generator is "Unix Makefiles" and should _just work_
-    - On Windows: default generator is [ninja](https://ninja-build.org/) and must also be in `PATH`
-- [libclang](https://rust-lang.github.io/rust-bindgen/requirements.html)
+    - On Linux/macOS: default generator is "Unix Makefiles" and should _just work_.
+    - On Windows: default generator is [ninja](https://ninja-build.org/) and must also be in `PATH`.
 
 ## Features
 
@@ -53,12 +52,12 @@ fn example() {
         let url = url.as_bytes_with_nul().as_ptr() as *const std::os::raw::c_char;
 
         // Reply socket
-        let mut rep_socket = nng_socket { id: 0 };
+        let mut rep_socket = nng_socket::default();
         nng_rep0_open(&mut rep_socket);
         nng_listen(rep_socket, url, null_mut(), 0);
 
         // Request socket
-        let mut req_socket = nng_socket { id: 0 };
+        let mut req_socket = nng_socket::default();
         nng_req0_open(&mut req_socket);
         nng_dial(req_socket, url, null_mut(), 0);
 

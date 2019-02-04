@@ -30,15 +30,8 @@ cmake-vs2017-win64 = ["build-nng"]
 nng-stats = ["build-nng"]
 nng-tls = ["build-nng"]
 
-[dependencies]
-cty = "0.1"
-
-[patch.crates-io]
-cty = { git = 'https://github.com/jeikabu/cty' }
-
 [build-dependencies]
 cmake = "0.1"
-bindgen = "0.47"
 
 [package.metadata.docs.rs]
 all-features = false

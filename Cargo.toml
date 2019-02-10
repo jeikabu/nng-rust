@@ -19,21 +19,19 @@ travis-ci = { repository = "jeikabu/nng-rust", branch = "master" }
 default = ["build-nng", "nng-stats"]
 build-nng = []
 # Cmake generators
-cmake-ninja = [] # Ninja
-cmake-vs2017 = [] # Visual Studio 15 2017
-cmake-vs2017-win64 = [] # Visual Studio 15 2017 Win64
+cmake-ninja = ["build-nng"] # Ninja
+cmake-vs2017 = ["build-nng"] # Visual Studio 15 2017
+cmake-vs2017-win64 = ["build-nng"] # Visual Studio 15 2017 Win64
 # Enable NNG stats
-nng-stats = []
+nng-stats = ["build-nng"]
 # Enable TLS (requires mbedTLS)
-nng-tls = []
+nng-tls = ["build-nng"]
+no_std = ["cty"]
 # Generate legacy API from 1.1.1-rc.4
 legacy-111-rc4 = []
 
 [dependencies]
-cty = "0.1"
-
-[patch.crates-io]
-cty = { git = 'https://github.com/jeikabu/cty' }
+cty = {version = "0.2", optional = true}
 
 [build-dependencies]
 cmake = "0.1"

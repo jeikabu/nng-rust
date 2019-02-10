@@ -44,10 +44,12 @@ fn main() {
             .rustified_enum("nng_pipe_ev")
             .rustified_enum("nng_sockaddr_family")
             .rustified_enum("nng_zt_status")
-            // no_std support
-            // https://rust-embedded.github.io/book/interoperability/c-with-rust.html#automatically-generating-the-interface
-            .ctypes_prefix("cty")
             .use_core();
+    }
+    if cfg!(feature = "no_std") {
+        // no_std support
+        // https://rust-embedded.github.io/book/interoperability/c-with-rust.html#automatically-generating-the-interface
+        builder = builder.ctypes_prefix("cty")
     }
     let bindings = builder.generate().expect("Unable to generate bindings");
     let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());

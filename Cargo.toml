@@ -1,6 +1,6 @@
 [package]
-name = "nng-sys"
-version = "1.1.1-rc.1"
+name = "runng-sys"
+version = "1.1.1-rc.5"
 authors = ["Nathan Kent <nate@nkent.net>", "Jake W <jeikabu@gmail.com>"]
 
 description = "Bindings to NNG (Nanomsg-Next-Generation) aka Nanomsg2"

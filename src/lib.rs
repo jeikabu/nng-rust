@@ -3,7 +3,7 @@
 ## Examples
 
 ```rust
-use nng_sys::*;
+# use runng_sys::*;
 use std::{ffi::CString, ptr::null_mut};
 
 fn example() {

@@ -31,6 +31,8 @@ fn main() {
 
     if !cfg!(feature = "legacy-111-rc4") {
         builder = builder
+            // #[derive(Default)]
+            .derive_default(true)
             .whitelist_type("nng_.*")
             .whitelist_function("nng_.*")
             .whitelist_var("NNG_.*")

@@ -3,21 +3,21 @@
 ## Examples
 
 ```rust
-# use runng_sys::*;
-use std::{ffi::CString, ptr::null_mut};
+use runng_sys::*;
+use std::{ffi::CString, os::raw::c_char, ptr::null_mut};
 
 fn example() {
     unsafe {
         let url = CString::new("inproc://nng_sys/tests/example").unwrap();
-        let url = url.as_bytes_with_nul().as_ptr() as *const std::os::raw::c_char;
+        let url = url.as_bytes_with_nul().as_ptr() as *const c_char;
 
         // Reply socket
-        let mut rep_socket = nng_socket { id: 0 };
+        let mut rep_socket = nng_socket::default();
         nng_rep0_open(&mut rep_socket);
         nng_listen(rep_socket, url, null_mut(), 0);
 
         // Request socket
-        let mut req_socket = nng_socket { id: 0 };
+        let mut req_socket = nng_socket::default();
         nng_req0_open(&mut req_socket);
         nng_dial(req_socket, url, null_mut(), 0);
 
@@ -55,9 +55,8 @@ fn example() {
 #![cfg_attr(feature = "no_std", no_std)]
 
 // This matches bindgen::Builder output
-include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
+include!("bindings.rs");
 
-#[cfg(not(feature = "legacy-111-rc4"))]
 impl nng_stat_type_enum {
     // TODO: 1.33/1.34 replace this with TryFrom once stabilized:
     // https://doc.rust-lang.org/std/convert/trait.TryFrom.html
@@ -76,7 +75,6 @@ impl nng_stat_type_enum {
     }
 }
 
-#[cfg(not(feature = "legacy-111-rc4"))]
 impl nng_unit_enum {
     // TODO: 1.33/1.34 replace this with TryFrom once stabilized:
     // https://doc.rust-lang.org/std/convert/trait.TryFrom.html
@@ -94,7 +92,6 @@ impl nng_unit_enum {
     }
 }
 
-#[cfg(not(feature = "legacy-111-rc4"))]
 impl nng_errno_enum {
     /// Converts value returned by NNG method into `error::Error`.
     pub fn from_i32(value: i32) -> Option<nng_errno_enum> {
@@ -146,7 +143,6 @@ impl nng_errno_enum {
     }
 }
 
-#[cfg(not(feature = "legacy-111-rc4"))]
 impl nng_pipe_ev {
     // TODO: 1.33/1.34 replace this with TryFrom once stabilized:
     // https://doc.rust-lang.org/std/convert/trait.TryFrom.html

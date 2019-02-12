@@ -17,18 +17,23 @@ travis-ci = { repository = "jeikabu/nng-rust", branch = "master" }
 
 [features]
 default = ["build-nng", "nng-stats"]
+
+# Whether or not to build the NNG library
 build-nng = []
+# Whether or not to run bindgen
+build-bindgen = []
+
 # Cmake generators
-cmake-ninja = ["build-nng"] # Ninja
-cmake-vs2017 = ["build-nng"] # Visual Studio 15 2017
-cmake-vs2017-win64 = ["build-nng"] # Visual Studio 15 2017 Win64
-# Enable NNG stats
+cmake-ninja = ["build-nng"]
+cmake-vs2017 = ["build-nng"]
+cmake-vs2017-win64 = ["build-nng"]
+
+# NNG Options
 nng-stats = ["build-nng"]
-# Enable TLS (requires mbedTLS)
 nng-tls = ["build-nng"]
+nng-compat = ["build-nng"]
+nng-supplemental = ["build-nng"]
 no_std = ["cty"]
-# Generate legacy API from 1.1.1-rc.4
-legacy-111-rc4 = []
 
 [dependencies]
 cty = {version = "0.2", optional = true}

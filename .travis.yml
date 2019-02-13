@@ -23,5 +23,5 @@ script:
   - cargo fmt --all -- --check
   #- cargo clippy
   # Build everything (including optional packages)
-  - cargo build --all --all-targets
+  - cargo build --all --features "build-bindgen no_std" --all-targets
   - RUST_BACKTRACE=1 cargo test

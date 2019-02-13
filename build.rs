@@ -17,7 +17,7 @@ fn main() {
 
         // Run cmake to build nng
         let dst = Config::new("nng")
-            .generator(generator)
+            .generator(generator.0)
             .define("NNG_TESTS", "OFF")
             .define("NNG_TOOLS", "OFF")
             .define("NNG_ENABLE_STATS", stats)
@@ -83,20 +83,29 @@ fn main() {
     }
 }
 
-fn generator() -> &'static str {
+struct Generator(&'static str);
+
+fn generator() -> Generator {
+    const UNIX_MAKEFILES: Generator = Generator("Unix Makefiles");
+    const NINJA: Generator = Generator("Ninja");
+    const VS2017_WIN64: Generator = Generator("Visual Studio 15 2017 Win64");
+    const VS2017: Generator = Generator("Visual Studio 15 2017");
+
     // Compile-time features
-    if cfg!(feature = "cmake-ninja") {
-        "Ninja"
-    } else if cfg!(feature = "cmake-vs2017") {
-        "Visual Studio 15 2017"
+    if cfg!(feature = "cmake-unix") {
+        UNIX_MAKEFILES
+    } else if cfg!(feature = "cmake-ninja") {
+        NINJA
     } else if cfg!(feature = "cmake-vs2017-win64") {
-        "Visual Studio 15 2017 Win64"
+        VS2017_WIN64
+    } else if cfg!(feature = "cmake-vs2017") {
+        VS2017
     } else {
         // Default generators
         if cfg!(target_family = "unix") {
-            "Unix Makefiles"
+            UNIX_MAKEFILES
         } else {
-            "Ninja"
+            VS2017_WIN64
         }
     }
 }

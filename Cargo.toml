@@ -24,9 +24,10 @@ build-nng = []
 build-bindgen = []
 
 # Cmake generators
+cmake-unix = ["build-nng"]
 cmake-ninja = ["build-nng"]
-cmake-vs2017 = ["build-nng"]
 cmake-vs2017-win64 = ["build-nng"]
+cmake-vs2017 = ["build-nng"]
 
 # NNG Options
 nng-stats = ["build-nng"]

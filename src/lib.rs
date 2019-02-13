@@ -3,7 +3,7 @@
 ## Examples
 
 ```rust
-use runng_sys::*;
+use nng_sys::*;
 use std::{ffi::CString, os::raw::c_char, ptr::null_mut};
 
 fn example() {
@@ -54,8 +54,11 @@ fn example() {
 #![allow(clippy::all)]
 #![cfg_attr(feature = "no_std", no_std)]
 
-// This matches bindgen::Builder output
-include!("bindings.rs");
+// Either bindgen generated source, or the static copy
+#[cfg(feature = "build-bindgen")]
+include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
+#[cfg(not(feature = "build-bindgen"))]
+include!("../bindings.rs");
 
 impl nng_stat_type_enum {
     // TODO: 1.33/1.34 replace this with TryFrom once stabilized:
@@ -87,57 +90,6 @@ impl nng_unit_enum {
             value if value == NNG_UNIT_MESSAGES as i32 => Ok(NNG_UNIT_MESSAGES),
             value if value == NNG_UNIT_MILLIS as i32 => Ok(NNG_UNIT_MILLIS),
             value if value == NNG_UNIT_EVENTS as i32 => Ok(NNG_UNIT_EVENTS),
-            _ => Err(TryFromIntError),
-        }
-    }
-}
-
-impl nng_errno_enum {
-    /// Converts value returned by NNG method into `error::Error`.
-    pub fn from_i32(value: i32) -> Option<nng_errno_enum> {
-        nng_errno_enum::try_from(value).ok()
-    }
-
-    // TODO: 1.33/1.34 replace this with TryFrom once stabilized:
-    // https://doc.rust-lang.org/std/convert/trait.TryFrom.html
-    #[allow(clippy::cyclomatic_complexity)]
-    pub fn try_from(value: i32) -> Result<Self, TryFromIntError> {
-        use nng_errno_enum::*;
-        match value {
-            value if value == NNG_EINTR as i32 => Ok(NNG_EINTR),
-            value if value == NNG_ENOMEM as i32 => Ok(NNG_ENOMEM),
-            value if value == NNG_EINVAL as i32 => Ok(NNG_EINVAL),
-            value if value == NNG_EBUSY as i32 => Ok(NNG_EBUSY),
-            value if value == NNG_ETIMEDOUT as i32 => Ok(NNG_ETIMEDOUT),
-            value if value == NNG_ECONNREFUSED as i32 => Ok(NNG_ECONNREFUSED),
-            value if value == NNG_ECLOSED as i32 => Ok(NNG_ECLOSED),
-            value if value == NNG_EAGAIN as i32 => Ok(NNG_EAGAIN),
-            value if value == NNG_ENOTSUP as i32 => Ok(NNG_ENOTSUP),
-            value if value == NNG_EADDRINUSE as i32 => Ok(NNG_EADDRINUSE),
-            value if value == NNG_ESTATE as i32 => Ok(NNG_ESTATE),
-            value if value == NNG_ENOENT as i32 => Ok(NNG_ENOENT),
-            value if value == NNG_EPROTO as i32 => Ok(NNG_EPROTO),
-            value if value == NNG_EUNREACHABLE as i32 => Ok(NNG_EUNREACHABLE),
-            value if value == NNG_EADDRINVAL as i32 => Ok(NNG_EADDRINVAL),
-            value if value == NNG_EPERM as i32 => Ok(NNG_EPERM),
-            value if value == NNG_EMSGSIZE as i32 => Ok(NNG_EMSGSIZE),
-            value if value == NNG_ECONNABORTED as i32 => Ok(NNG_ECONNABORTED),
-            value if value == NNG_ECONNRESET as i32 => Ok(NNG_ECONNRESET),
-            value if value == NNG_ECANCELED as i32 => Ok(NNG_ECANCELED),
-            value if value == NNG_ENOFILES as i32 => Ok(NNG_ENOFILES),
-            value if value == NNG_ENOSPC as i32 => Ok(NNG_ENOSPC),
-            value if value == NNG_EEXIST as i32 => Ok(NNG_EEXIST),
-            value if value == NNG_EREADONLY as i32 => Ok(NNG_EREADONLY),
-            value if value == NNG_EWRITEONLY as i32 => Ok(NNG_EWRITEONLY),
-            value if value == NNG_ECRYPTO as i32 => Ok(NNG_ECRYPTO),
-            value if value == NNG_EPEERAUTH as i32 => Ok(NNG_EPEERAUTH),
-            value if value == NNG_ENOARG as i32 => Ok(NNG_ENOARG),
-            value if value == NNG_EAMBIGUOUS as i32 => Ok(NNG_EAMBIGUOUS),
-            value if value == NNG_EBADTYPE as i32 => Ok(NNG_EBADTYPE),
-            value if value == NNG_EINTERNAL as i32 => Ok(NNG_EINTERNAL),
-            value if value == NNG_ESYSERR as i32 => Ok(NNG_ESYSERR),
-            value if value == NNG_ETRANERR as i32 => Ok(NNG_ETRANERR),
-
             _ => Err(TryFromIntError),
         }
     }

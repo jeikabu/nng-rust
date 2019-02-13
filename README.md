@@ -44,7 +44,7 @@ features = ["cmake-ninja"]
 
 ## Examples
 ```rust
-use runng_sys::*;
+use nng_sys::*;
 use std::{ffi::CString, os::raw::c_char, ptr::null_mut};
 
 fn example() {

@@ -18,7 +18,6 @@ fn main() {
         // Run cmake to build nng
         let dst = Config::new("nng")
             .generator(generator)
-            .define("CMAKE_BUILD_TYPE", "Release")
             .define("NNG_TESTS", "OFF")
             .define("NNG_TOOLS", "OFF")
             .define("NNG_ENABLE_STATS", stats)
@@ -43,12 +42,7 @@ fn main() {
         println!("cargo:rustc-link-lib=dylib=nng");
     }
 
-    let out_path = PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap())
-        .join("src")
-        .join("bindings.rs");
     if cfg!(feature = "build-bindgen") {
-        // https://rust-lang-nursery.github.io/rust-bindgen
-        // https://docs.rs/bindgen
         let mut builder = bindgen::Builder::default()
             // This is needed if use `#include <nng.h>` instead of `#include "path/nng.h"` in wrapper.h
             //.clang_arg("-Inng/src/")
@@ -62,14 +56,10 @@ fn main() {
             // Generate `pub const NNG_UNIT_EVENTS` instead of `nng_unit_enum_NNG_UNIT_EVENTS`
             .prepend_enum_name(false)
             // Generate `pub enum ...` instead of multiple `pub const ...`
-            .rustified_enum("nng_.*_enum")
-            // Enum special cases:
-            .rustified_enum("nng_pipe_ev")
-            .rustified_enum("nng_sockaddr_family")
-            .rustified_enum("nng_zt_status")
-            .rustified_enum("nng_tls_mode")
-            .rustified_enum("nng_tls_auth_mode")
-            .rustified_enum("nng_http_status")
+            .default_enum_style(bindgen::EnumVariation::Rust)
+            .constified_enum("nng_flag_enum")
+            // NNG_ESYSERR and NNG_ETRANERR are used like flag
+            .constified_enum("nng_errno_enum")
             .use_core();
 
         if cfg!(feature = "nng-compat") {
@@ -84,15 +74,12 @@ fn main() {
             builder = builder.ctypes_prefix("cty")
         }
 
+        let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());
         builder
             .generate()
             .expect("Unable to generate bindings")
-            .write_to_file(out_path)
+            .write_to_file(out_path.join("bindings.rs"))
             .expect("Couldn't write bindings");
-    } else {
-        if !out_path.exists() {
-            // Output a warning, suggest they enable `--features build-bindgen`
-        }
     }
 }
 

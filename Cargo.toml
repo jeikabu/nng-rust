@@ -32,8 +32,9 @@ cmake-vs2017 = ["build-nng"]
 # NNG Options
 nng-stats = ["build-nng"]
 nng-tls = ["build-nng"]
-nng-compat = ["build-nng"]
-nng-supplemental = ["build-nng"]
+nng-compat = ["build-bindgen"]
+nng-supplemental = ["build-bindgen"]
+
 no_std = ["cty"]
 
 [dependencies]

@@ -21,20 +21,30 @@ nng-sys = "1.1.1-rc"
 
 Requirements:
 - [cmake](https://cmake.org/) in `PATH`
-    - On Linux/macOS: default generator is "Unix Makefiles" and should _just work_
-    - On Windows: default generator is [ninja](https://ninja-build.org/) and must also be in `PATH`
-- [libclang](https://rust-lang.github.io/rust-bindgen/requirements.html)
+    - On Linux/macOS: default generator is "Unix Makefiles"
+    - On Windows: default generator is "Visual Studio 15 2017 Win64"
+- _Optional_ libclang needed if using `build-bindgen` feature to run [bindgen](https://rust-lang.github.io/rust-bindgen/requirements.html)
 
 ## Features
 
 - `build-nng`: use cmake to build NNG from source (enabled by default)
+- `build-bindgen`: run bindgen to re-generate Rust FFI bindings to C
+- `cmake-unix`: use cmake generator "Unix Makefiles" (default on Linux/macOS)
 - `cmake-ninja`: use cmake generator "Ninja"
 - `cmake-vs2017`: use cmake generator "Visual Studio 15 2017"
-- `cmake-vs2017-win64`: use cmake generator "Visual Studio 15 2017 Win64"
+- `cmake-vs2017-win64`: use cmake generator "Visual Studio 15 2017 Win64" (default on Windows)
 - `nng-stats`: enable NNG stats `NNG_ENABLE_STATS` (enabled by default)
 - `nng-tls`: enable TLS `NNG_ENABLE_TLS` (requires mbedTLS)
+- `nng-supplemental`: generate bindings to NNG's supplemental functions
+- `nng-compat`: generate bindings to NNG's nanomsg compatible functions
 
-For example, to disable stats and use Ninja cmake generator, in your `Cargo.toml`:
+_Example_) Re-generate FFI bindings with bindgen:
+```toml
+[dependencies]
+nng-sys = { version = "1.1.1-rc", features = ["build-bindgen"] }
+```
+
+_Example_) Disable stats and use Ninja cmake generator:
 ```toml
 [dependencies.nng-sys]
 version = "1.1.1-rc"

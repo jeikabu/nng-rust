@@ -36,7 +36,6 @@ fn main() {
             dst.join("lib64").display()
         );
 
-        // Tell rustc to use nng static library
         println!("cargo:rustc-link-lib=static=nng");
     } else {
         println!("cargo:rustc-link-lib=dylib=nng");

@@ -1481,12 +1481,9 @@ extern "C" {
 extern "C" {
     pub fn nng_pipe_listener(arg1: nng_pipe) -> nng_listener;
 }
-#[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-pub enum nng_flag_enum {
-    NNG_FLAG_ALLOC = 1,
-    NNG_FLAG_NONBLOCK = 2,
-}
+pub const NNG_FLAG_ALLOC: nng_flag_enum = 1;
+pub const NNG_FLAG_NONBLOCK: nng_flag_enum = 2;
+pub type nng_flag_enum = i32;
 extern "C" {
     pub fn nng_stats_get(arg1: *mut *mut nng_stat) -> ::std::os::raw::c_int;
 }
@@ -1545,43 +1542,40 @@ extern "C" {
 extern "C" {
     pub fn nng_device(arg1: nng_socket, arg2: nng_socket) -> ::std::os::raw::c_int;
 }
-#[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-pub enum nng_errno_enum {
-    NNG_EINTR = 1,
-    NNG_ENOMEM = 2,
-    NNG_EINVAL = 3,
-    NNG_EBUSY = 4,
-    NNG_ETIMEDOUT = 5,
-    NNG_ECONNREFUSED = 6,
-    NNG_ECLOSED = 7,
-    NNG_EAGAIN = 8,
-    NNG_ENOTSUP = 9,
-    NNG_EADDRINUSE = 10,
-    NNG_ESTATE = 11,
-    NNG_ENOENT = 12,
-    NNG_EPROTO = 13,
-    NNG_EUNREACHABLE = 14,
-    NNG_EADDRINVAL = 15,
-    NNG_EPERM = 16,
-    NNG_EMSGSIZE = 17,
-    NNG_ECONNABORTED = 18,
-    NNG_ECONNRESET = 19,
-    NNG_ECANCELED = 20,
-    NNG_ENOFILES = 21,
-    NNG_ENOSPC = 22,
-    NNG_EEXIST = 23,
-    NNG_EREADONLY = 24,
-    NNG_EWRITEONLY = 25,
-    NNG_ECRYPTO = 26,
-    NNG_EPEERAUTH = 27,
-    NNG_ENOARG = 28,
-    NNG_EAMBIGUOUS = 29,
-    NNG_EBADTYPE = 30,
-    NNG_EINTERNAL = 1000,
-    NNG_ESYSERR = 268435456,
-    NNG_ETRANERR = 536870912,
-}
+pub const NNG_EINTR: nng_errno_enum = 1;
+pub const NNG_ENOMEM: nng_errno_enum = 2;
+pub const NNG_EINVAL: nng_errno_enum = 3;
+pub const NNG_EBUSY: nng_errno_enum = 4;
+pub const NNG_ETIMEDOUT: nng_errno_enum = 5;
+pub const NNG_ECONNREFUSED: nng_errno_enum = 6;
+pub const NNG_ECLOSED: nng_errno_enum = 7;
+pub const NNG_EAGAIN: nng_errno_enum = 8;
+pub const NNG_ENOTSUP: nng_errno_enum = 9;
+pub const NNG_EADDRINUSE: nng_errno_enum = 10;
+pub const NNG_ESTATE: nng_errno_enum = 11;
+pub const NNG_ENOENT: nng_errno_enum = 12;
+pub const NNG_EPROTO: nng_errno_enum = 13;
+pub const NNG_EUNREACHABLE: nng_errno_enum = 14;
+pub const NNG_EADDRINVAL: nng_errno_enum = 15;
+pub const NNG_EPERM: nng_errno_enum = 16;
+pub const NNG_EMSGSIZE: nng_errno_enum = 17;
+pub const NNG_ECONNABORTED: nng_errno_enum = 18;
+pub const NNG_ECONNRESET: nng_errno_enum = 19;
+pub const NNG_ECANCELED: nng_errno_enum = 20;
+pub const NNG_ENOFILES: nng_errno_enum = 21;
+pub const NNG_ENOSPC: nng_errno_enum = 22;
+pub const NNG_EEXIST: nng_errno_enum = 23;
+pub const NNG_EREADONLY: nng_errno_enum = 24;
+pub const NNG_EWRITEONLY: nng_errno_enum = 25;
+pub const NNG_ECRYPTO: nng_errno_enum = 26;
+pub const NNG_EPEERAUTH: nng_errno_enum = 27;
+pub const NNG_ENOARG: nng_errno_enum = 28;
+pub const NNG_EAMBIGUOUS: nng_errno_enum = 29;
+pub const NNG_EBADTYPE: nng_errno_enum = 30;
+pub const NNG_EINTERNAL: nng_errno_enum = 1000;
+pub const NNG_ESYSERR: nng_errno_enum = 268435456;
+pub const NNG_ETRANERR: nng_errno_enum = 536870912;
+pub type nng_errno_enum = i32;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct nng_url {

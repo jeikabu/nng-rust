@@ -60,6 +60,36 @@ include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 #[cfg(not(feature = "build-bindgen"))]
 include!("../bindings.rs");
 
+impl nng_pipe {
+    pub const NNG_PIPE_INITIALIZER: nng_pipe = nng_pipe {
+        _bindgen_opaque_blob: 0,
+    };
+}
+
+impl nng_socket {
+    pub const NNG_SOCKET_INITIALIZER: nng_socket = nng_socket {
+        _bindgen_opaque_blob: 0,
+    };
+}
+
+impl nng_dialer {
+    pub const NNG_DIALER_INITIALIZER: nng_dialer = nng_dialer {
+        _bindgen_opaque_blob: 0,
+    };
+}
+
+impl nng_listener {
+    pub const NNG_LISTENER_INITIALIZER: nng_listener = nng_listener {
+        _bindgen_opaque_blob: 0,
+    };
+}
+
+impl nng_ctx {
+    pub const NNG_CTX_INITIALIZER: nng_ctx = nng_ctx {
+        _bindgen_opaque_blob: 0,
+    };
+}
+
 impl nng_stat_type_enum {
     // TODO: 1.33/1.34 replace this with TryFrom once stabilized:
     // https://doc.rust-lang.org/std/convert/trait.TryFrom.html

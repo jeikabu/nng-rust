@@ -10,33 +10,31 @@ environment:
       channel: stable
       platform: x64
     # Stable 32-bit MSVC
-    #- target: i686-pc-windows-msvc
-    #  channel: stable
-    #  platform: x86
+    - target: i686-pc-windows-msvc
+      channel: stable
+      platform: x86
 
 # Visual Studio developer environment for x86/x64
 # https://www.appveyor.com/docs/lang/cpp/#visual-studio
-# for:
-# -
-#   matrix:
-#     only:
-#       - platform: x86
-#   init:
-#     - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars32.bat"
-# -
-#   matrix:
-#     only:
-#       - platform: x64
-#   init:
-#     - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
+for:
+-
+  matrix:
+    only:
+      - platform: x86
+  init:
+    - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars32.bat"
+-
+  matrix:
+    only:
+      - platform: x64
+  init:
+    - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
 
 install:
   # Download rustup and install rust
   - appveyor DownloadFile https://win.rustup.rs/ -FileName rustup-init.exe
   - rustup-init -yv --default-toolchain %channel% --default-host %target%
   - set PATH=%PATH%;%USERPROFILE%\.cargo\bin
-  # Install ninja (used to build nng)
-  - choco install ninja
   - rustc -vV
   - cargo -vV
   # Checkout submodules
@@ -46,5 +44,6 @@ install:
 build: false
 
 test_script:
-  # Run only our tests (bindgen also generates tests)
-  - cargo test --verbose -- "tests::"
+- ps: >-
+    if ($env:platform -eq "x86") { cargo test --features cmake-vs2017 --verbose -- "tests::" }
+        else { cargo test --features build-bindgen --verbose -- "tests::" }

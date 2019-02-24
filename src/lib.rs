@@ -56,9 +56,13 @@ fn example() {
 
 // Either bindgen generated source, or the static copy
 #[cfg(feature = "build-bindgen")]
-include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
+mod bindings {
+    include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
+}
 #[cfg(not(feature = "build-bindgen"))]
-include!("../bindings.rs");
+mod bindings;
+
+pub use bindings::*;
 
 impl nng_pipe {
     pub const NNG_PIPE_INITIALIZER: nng_pipe = nng_pipe {

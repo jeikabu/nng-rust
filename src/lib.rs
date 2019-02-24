@@ -54,7 +54,7 @@ fn example() {
 #![allow(clippy::all)]
 #![cfg_attr(feature = "no_std", no_std)]
 
-use std::cmp::PartialEq;
+use std::cmp::{Eq, PartialEq};
 
 // Either bindgen generated source, or the static copy
 #[cfg(feature = "build-bindgen")]
@@ -72,6 +72,7 @@ impl PartialEq for nng_pipe {
         self._bindgen_opaque_blob == other._bindgen_opaque_blob
     }
 }
+impl Eq for nng_pipe {}
 
 impl nng_socket {
     pub const NNG_SOCKET_INITIALIZER: nng_socket = nng_socket {
@@ -83,6 +84,7 @@ impl PartialEq for nng_socket {
         self._bindgen_opaque_blob == other._bindgen_opaque_blob
     }
 }
+impl Eq for nng_socket {}
 
 impl nng_dialer {
     pub const NNG_DIALER_INITIALIZER: nng_dialer = nng_dialer {
@@ -94,6 +96,7 @@ impl PartialEq for nng_dialer {
         self._bindgen_opaque_blob == other._bindgen_opaque_blob
     }
 }
+impl Eq for nng_dialer {}
 
 impl nng_listener {
     pub const NNG_LISTENER_INITIALIZER: nng_listener = nng_listener {
@@ -105,6 +108,7 @@ impl PartialEq for nng_listener {
         self._bindgen_opaque_blob == other._bindgen_opaque_blob
     }
 }
+impl Eq for nng_listener {}
 
 impl nng_ctx {
     pub const NNG_CTX_INITIALIZER: nng_ctx = nng_ctx {
@@ -116,6 +120,7 @@ impl PartialEq for nng_ctx {
         self._bindgen_opaque_blob == other._bindgen_opaque_blob
     }
 }
+impl Eq for nng_ctx {}
 
 impl nng_stat_type_enum {
     // TODO: 1.33/1.34 replace this with TryFrom once stabilized:

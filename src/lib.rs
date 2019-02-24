@@ -57,12 +57,14 @@ fn example() {
 // Either bindgen generated source, or the static copy
 #[cfg(feature = "build-bindgen")]
 mod bindings {
+    pub use crate::sockaddr::*;
     include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 }
 #[cfg(not(feature = "build-bindgen"))]
 mod bindings;
 
 pub use bindings::*;
+pub use sockaddr::*;
 
 impl nng_pipe {
     pub const NNG_PIPE_INITIALIZER: nng_pipe = nng_pipe {
@@ -92,6 +94,85 @@ impl nng_ctx {
     pub const NNG_CTX_INITIALIZER: nng_ctx = nng_ctx {
         _bindgen_opaque_blob: 0,
     };
+}
+
+mod sockaddr {
+
+    #[repr(u16)]
+    #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
+    pub enum nng_sockaddr_family {
+        NNG_AF_UNSPEC = 0,
+        NNG_AF_INPROC = 1,
+        NNG_AF_IPC = 2,
+        NNG_AF_INET = 3,
+        NNG_AF_INET6 = 4,
+        NNG_AF_ZT = 5,
+    }
+    impl Default for nng_sockaddr_family {
+        fn default() -> Self {
+            nng_sockaddr_family::NNG_AF_UNSPEC
+        }
+    }
+    #[repr(C)]
+    #[derive(Copy, Clone)]
+    pub struct nng_sockaddr_inproc {
+        pub sa_family: nng_sockaddr_family,
+        pub sa_name: [::std::os::raw::c_char; 128usize],
+    }
+    impl Default for nng_sockaddr_inproc {
+        fn default() -> Self {
+            unsafe { ::core::mem::zeroed() }
+        }
+    }
+    #[repr(C)]
+    #[derive(Copy, Clone)]
+    pub struct nng_sockaddr_path {
+        pub sa_family: nng_sockaddr_family,
+        pub sa_path: [::std::os::raw::c_char; 128usize],
+    }
+    impl Default for nng_sockaddr_path {
+        fn default() -> Self {
+            unsafe { ::core::mem::zeroed() }
+        }
+    }
+    pub type nng_sockaddr_ipc = nng_sockaddr_path;
+    #[repr(C)]
+    #[derive(Debug, Default, Copy, Clone)]
+    pub struct nng_sockaddr_in6 {
+        pub sa_family: nng_sockaddr_family,
+        pub sa_port: u16,
+        pub sa_addr: [u8; 16usize],
+    }
+    pub type nng_sockaddr_udp6 = nng_sockaddr_in6;
+    pub type nng_sockaddr_tcp6 = nng_sockaddr_in6;
+    #[repr(C)]
+    #[derive(Debug, Default, Copy, Clone)]
+    pub struct nng_sockaddr_in {
+        pub sa_family: nng_sockaddr_family,
+        pub sa_port: u16,
+        pub sa_addr: u32,
+    }
+    #[repr(C)]
+    #[derive(Debug, Default, Copy, Clone)]
+    pub struct nng_sockaddr_zt {
+        pub sa_family: nng_sockaddr_family,
+        pub sa_nwid: u64,
+        pub sa_nodeid: u64,
+        pub sa_port: u32,
+    }
+    pub type nng_sockaddr_udp = nng_sockaddr_in;
+    pub type nng_sockaddr_tcp = nng_sockaddr_in;
+    #[repr(C)]
+    #[derive(Copy, Clone)]
+    pub union nng_sockaddr {
+        pub s_family: nng_sockaddr_family,
+        pub s_ipc: nng_sockaddr_ipc,
+        pub s_inproc: nng_sockaddr_inproc,
+        pub s_in6: nng_sockaddr_in6,
+        pub s_in: nng_sockaddr_in,
+        pub s_zt: nng_sockaddr_zt,
+        _bindgen_union_align: [u64; 17usize],
+    }
 }
 
 impl nng_stat_type_enum {

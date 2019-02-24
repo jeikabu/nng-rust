@@ -54,6 +54,8 @@ fn example() {
 #![allow(clippy::all)]
 #![cfg_attr(feature = "no_std", no_std)]
 
+use std::cmp::PartialEq;
+
 // Either bindgen generated source, or the static copy
 #[cfg(feature = "build-bindgen")]
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
@@ -65,11 +67,21 @@ impl nng_pipe {
         _bindgen_opaque_blob: 0,
     };
 }
+impl PartialEq for nng_pipe {
+    fn eq(&self, other: &Self) -> bool {
+        self._bindgen_opaque_blob == other._bindgen_opaque_blob
+    }
+}
 
 impl nng_socket {
     pub const NNG_SOCKET_INITIALIZER: nng_socket = nng_socket {
         _bindgen_opaque_blob: 0,
     };
+}
+impl PartialEq for nng_socket {
+    fn eq(&self, other: &Self) -> bool {
+        self._bindgen_opaque_blob == other._bindgen_opaque_blob
+    }
 }
 
 impl nng_dialer {
@@ -77,17 +89,32 @@ impl nng_dialer {
         _bindgen_opaque_blob: 0,
     };
 }
+impl PartialEq for nng_dialer {
+    fn eq(&self, other: &Self) -> bool {
+        self._bindgen_opaque_blob == other._bindgen_opaque_blob
+    }
+}
 
 impl nng_listener {
     pub const NNG_LISTENER_INITIALIZER: nng_listener = nng_listener {
         _bindgen_opaque_blob: 0,
     };
 }
+impl PartialEq for nng_listener {
+    fn eq(&self, other: &Self) -> bool {
+        self._bindgen_opaque_blob == other._bindgen_opaque_blob
+    }
+}
 
 impl nng_ctx {
     pub const NNG_CTX_INITIALIZER: nng_ctx = nng_ctx {
         _bindgen_opaque_blob: 0,
     };
+}
+impl PartialEq for nng_ctx {
+    fn eq(&self, other: &Self) -> bool {
+        self._bindgen_opaque_blob == other._bindgen_opaque_blob
+    }
 }
 
 impl nng_stat_type_enum {

@@ -143,6 +143,21 @@ impl nng_pipe_ev {
     }
 }
 
+impl nng_sockaddr_family {
+    pub fn try_from(value: i32) -> Result<Self, TryFromIntError> {
+        use nng_sockaddr_family::*;
+        match value {
+            value if value == NNG_AF_UNSPEC as i32 => Ok(NNG_AF_UNSPEC),
+            value if value == NNG_AF_INPROC as i32 => Ok(NNG_AF_INPROC),
+            value if value == NNG_AF_IPC as i32 => Ok(NNG_AF_IPC),
+            value if value == NNG_AF_INET as i32 => Ok(NNG_AF_INET),
+            value if value == NNG_AF_INET6 as i32 => Ok(NNG_AF_INET6),
+            value if value == NNG_AF_ZT as i32 => Ok(NNG_AF_ZT),
+            _ => Err(TryFromIntError),
+        }
+    }
+}
+
 // TODO: 1.33/1.34 replace this with TryFrom once stabilized:
 // https://doc.rust-lang.org/std/num/struct.TryFromIntError.html
 #[derive(Clone, Copy, Debug, PartialEq)]

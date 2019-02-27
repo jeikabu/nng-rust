@@ -64,6 +64,11 @@ pub const NNG_OPT_ZT_ORBIT: &'static [u8; 9usize] = b"zt:orbit\0";
 pub const NNG_OPT_ZT_DEORBIT: &'static [u8; 11usize] = b"zt:deorbit\0";
 pub const NNG_OPT_ZT_ADD_LOCAL_ADDR: &'static [u8; 18usize] = b"zt:add-local-addr\0";
 pub const NNG_OPT_ZT_CLEAR_LOCAL_ADDRS: &'static [u8; 21usize] = b"zt:clear-local-addrs\0";
+pub type __uint8_t = ::std::os::raw::c_uchar;
+pub type __uint16_t = ::std::os::raw::c_ushort;
+pub type __int32_t = ::std::os::raw::c_int;
+pub type __uint32_t = ::std::os::raw::c_uint;
+pub type __uint64_t = ::std::os::raw::c_ulong;
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone)]
 pub struct nng_ctx_s {
@@ -518,7 +523,7 @@ impl Default for nng_sockaddr {
         unsafe { ::core::mem::zeroed() }
     }
 }
-#[repr(i32)]
+#[repr(u32)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub enum nng_sockaddr_family {
     NNG_AF_UNSPEC = 0,
@@ -691,7 +696,7 @@ extern "C" {
         arg3: *mut *mut ::std::os::raw::c_void,
     ) -> ::std::os::raw::c_int;
 }
-#[repr(i32)]
+#[repr(u32)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub enum nng_pipe_ev {
     NNG_PIPE_EV_ADD_PRE = 0,
@@ -1483,7 +1488,7 @@ extern "C" {
 }
 pub const NNG_FLAG_ALLOC: nng_flag_enum = 1;
 pub const NNG_FLAG_NONBLOCK: nng_flag_enum = 2;
-pub type nng_flag_enum = i32;
+pub type nng_flag_enum = u32;
 extern "C" {
     pub fn nng_stats_get(arg1: *mut *mut nng_stat) -> ::std::os::raw::c_int;
 }
@@ -1505,7 +1510,7 @@ extern "C" {
 extern "C" {
     pub fn nng_stat_type(arg1: *mut nng_stat) -> ::std::os::raw::c_int;
 }
-#[repr(i32)]
+#[repr(u32)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub enum nng_stat_type_enum {
     NNG_STAT_SCOPE = 0,
@@ -1518,7 +1523,7 @@ pub enum nng_stat_type_enum {
 extern "C" {
     pub fn nng_stat_unit(arg1: *mut nng_stat) -> ::std::os::raw::c_int;
 }
-#[repr(i32)]
+#[repr(u32)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub enum nng_unit_enum {
     NNG_UNIT_NONE = 0,
@@ -1575,7 +1580,7 @@ pub const NNG_EBADTYPE: nng_errno_enum = 30;
 pub const NNG_EINTERNAL: nng_errno_enum = 1000;
 pub const NNG_ESYSERR: nng_errno_enum = 268435456;
 pub const NNG_ETRANERR: nng_errno_enum = 536870912;
-pub type nng_errno_enum = i32;
+pub type nng_errno_enum = u32;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct nng_url {
@@ -1807,7 +1812,7 @@ extern "C" {
 extern "C" {
     pub fn nng_wss_register() -> ::std::os::raw::c_int;
 }
-#[repr(i32)]
+#[repr(u32)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub enum nng_zt_status {
     NNG_ZT_STATUS_UP = 0,

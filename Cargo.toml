@@ -34,6 +34,8 @@ nng-stats = ["build-nng"]
 nng-tls = ["build-nng"]
 nng-compat = ["build-bindgen"]
 nng-supplemental = ["build-bindgen"]
+# Longer getopt/setopt functions from nng <= 1.1.1
+nng-legacy-getoptsetopt = ["build-bindgen"]
 
 no_std = ["cty"]
 

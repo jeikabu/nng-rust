@@ -61,10 +61,15 @@ fn main() {
             .use_core();
 
         if cfg!(feature = "nng-compat") {
-            builder = builder.header("compat.h");
+            builder = builder.header("src/compat.h");
         }
         if cfg!(feature = "nng-supplemental") {
-            builder = builder.header("supplemental.h");
+            builder = builder.header("src/supplemental.h");
+        }
+        if !cfg!(feature = "nng-legacy-getoptsetopt") {
+            builder = builder
+                .blacklist_function("nng.*_getopt.*")
+                .blacklist_function("nng.*_setopt.*");
         }
         if cfg!(feature = "no_std") {
             // no_std support

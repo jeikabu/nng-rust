@@ -1,4 +1,4 @@
-#include "../nng/src/supplemental/http/http.h"
-#include "../nng/src/supplemental/util/options.h"
-#include "../nng/src/supplemental/util/platform.h"
-#include "../nng/src/supplemental/tls/tls.h"
+#include "nng/supplemental/http/http.h"
+#include "nng/supplemental/util/options.h"
+#include "nng/supplemental/util/platform.h"
+#include "nng/supplemental/tls/tls.h"

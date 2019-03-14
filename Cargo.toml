@@ -19,9 +19,9 @@ travis-ci = { repository = "jeikabu/nng-rust", branch = "master" }
 default = ["build-nng", "nng-stats"]
 
 # Whether or not to build the NNG library
-build-nng = []
+build-nng = ["cmake"]
 # Whether or not to run bindgen
-build-bindgen = []
+build-bindgen = ["build-nng", "bindgen"]
 
 # Cmake generators
 cmake-unix = ["build-nng"]
@@ -41,8 +41,8 @@ no_std = ["cty"]
 cty = {version = "0.2", optional = true}
 
 [build-dependencies]
-cmake = "0.1"
-bindgen = "0.47"
+cmake = {version = "0.1", optional = true}
+bindgen = {version = "0.47", optional = true}
 
 [package.metadata.docs.rs]
 all-features = false

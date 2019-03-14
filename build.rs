@@ -91,7 +91,8 @@ fn build_bindgen() {
         .constified_enum("nng_flag_enum")
         // NNG_ESYSERR and NNG_ETRANERR are used like flag
         .constified_enum("nng_errno_enum")
-        .use_core();
+        .use_core()
+        .parse_callbacks(Box::new(BindgenCallbacks::default()));
 
     if cfg!(feature = "nng-compat") {
         builder = builder.header("compat.h");
@@ -116,4 +117,25 @@ fn build_bindgen() {
 #[cfg(not(feature = "build-bindgen"))]
 fn build_bindgen() {
     // Nothing
+}
+
+#[derive(Debug, Default)]
+struct BindgenCallbacks;
+
+#[cfg(feature = "build-bindgen")]
+impl bindgen::callbacks::ParseCallbacks for BindgenCallbacks {
+    fn enum_variant_behavior(
+        &self,
+        _enum_name: Option<&str>,
+        original_variant_name: &str,
+        _variant_value: bindgen::callbacks::EnumVariantValue,
+    ) -> Option<bindgen::callbacks::EnumVariantCustomBehavior> {
+        // nng_pipe_ev::NNG_PIPE_EV_NUM is only used in NNG internals to validate range of values.
+        // We want to exclude it so it doesn't need to be included for `match` to be exhaustive.
+        if original_variant_name == "NNG_PIPE_EV_NUM" {
+            Some(bindgen::callbacks::EnumVariantCustomBehavior::Hide)
+        } else {
+            None
+        }
+    }
 }

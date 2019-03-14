@@ -21,7 +21,7 @@ default = ["build-nng", "nng-stats"]
 # Whether or not to build the NNG library
 build-nng = ["cmake"]
 # Whether or not to run bindgen
-build-bindgen = ["build-nng", "bindgen"]
+build-bindgen = ["bindgen"]
 
 # Cmake generators
 cmake-unix = ["build-nng"]
@@ -36,6 +36,10 @@ nng-compat = ["build-bindgen"]
 nng-supplemental = ["build-bindgen"]
 
 no_std = ["cty"]
+
+## `source-` features should only be used when working with the source code (as opposed to using a crate)
+# Update `src/bindings.rs`
+source-update-bindings = ["build-bindgen"]
 
 [dependencies]
 cty = {version = "0.2", optional = true}

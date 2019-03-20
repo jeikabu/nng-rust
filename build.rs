@@ -92,7 +92,10 @@ fn build_bindgen() {
         // NNG_ESYSERR and NNG_ETRANERR are used like flag
         .constified_enum("nng_errno_enum")
         .use_core()
-        .parse_callbacks(Box::new(BindgenCallbacks::default()));
+        .parse_callbacks(Box::new(BindgenCallbacks::default()))
+        // Layout tests are non-portable; 64-bit tests are "wrong" size on 32-bit and always fail.
+        // Don't output tests if we're regenerating `src/bindings.rs` (shared by all platforms when bindgen not used)
+        .layout_tests(!cfg!(feature = "source-update-bindings"));
 
     if cfg!(feature = "nng-compat") {
         builder = builder.header("compat.h");
@@ -106,12 +109,21 @@ fn build_bindgen() {
         builder = builder.ctypes_prefix("cty")
     }
 
-    let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());
+    const BINDINGS_RS: &str = "bindings.rs";
+    let out_file = PathBuf::from(env::var("OUT_DIR").unwrap()).join(BINDINGS_RS);
     builder
         .generate()
         .expect("Unable to generate bindings")
-        .write_to_file(out_path.join("bindings.rs"))
+        .write_to_file(out_file.to_owned())
         .expect("Couldn't write bindings");
+
+    #[cfg(feature = "source-update-bindings")]
+    {
+        let bindings = PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap())
+            .join("src")
+            .join(BINDINGS_RS);
+        std::fs::copy(out_file, bindings).expect("Unable to update bindings");
+    }
 }
 
 #[cfg(not(feature = "build-bindgen"))]

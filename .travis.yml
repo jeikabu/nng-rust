@@ -12,7 +12,6 @@ addons:
   apt:
     packages:
       - cmake
-      - ninja-build
 
 before_script:
   - rustup component add clippy
@@ -22,6 +21,8 @@ script:
   # Check source code formatting
   - cargo fmt --all -- --check
   #- cargo clippy
+  - cargo build --all --all-targets
   # Build everything (including optional packages)
   - cargo build --all --features "build-bindgen no_std" --all-targets
   - RUST_BACKTRACE=1 cargo test
+  - cargo build --features source-update-bindings

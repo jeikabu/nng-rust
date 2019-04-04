@@ -62,7 +62,7 @@ mod bindings {
 #[cfg(not(feature = "build-bindgen"))]
 mod bindings;
 
-pub use bindings::*;
+pub use crate::bindings::*;
 
 impl nng_pipe {
     pub const NNG_PIPE_INITIALIZER: nng_pipe = nng_pipe {
@@ -99,7 +99,7 @@ impl nng_stat_type_enum {
     // https://doc.rust-lang.org/std/convert/trait.TryFrom.html
     /// Converts value returned by [nng_stat_type](https://nanomsg.github.io/nng/man/v1.1.0/nng_stat_type.3) into `nng_stat_type_enum`.
     pub fn try_from(value: i32) -> Result<Self, TryFromIntError> {
-        use nng_stat_type_enum::*;
+        use crate::nng_stat_type_enum::*;
         match value {
             value if value == NNG_STAT_SCOPE as i32 => Ok(NNG_STAT_SCOPE),
             value if value == NNG_STAT_LEVEL as i32 => Ok(NNG_STAT_LEVEL),
@@ -117,7 +117,7 @@ impl nng_unit_enum {
     // https://doc.rust-lang.org/std/convert/trait.TryFrom.html
     /// Converts value returned by [nng_stat_unit](https://nanomsg.github.io/nng/man/v1.1.0/nng_stat_unit.3) into `nng_unit_enum`.
     pub fn try_from(value: i32) -> Result<Self, TryFromIntError> {
-        use nng_unit_enum::*;
+        use crate::nng_unit_enum::*;
         match value {
             value if value == NNG_UNIT_NONE as i32 => Ok(NNG_UNIT_NONE),
             value if value == NNG_UNIT_BYTES as i32 => Ok(NNG_UNIT_BYTES),
@@ -133,7 +133,7 @@ impl nng_pipe_ev {
     // TODO: 1.33/1.34 replace this with TryFrom once stabilized:
     // https://doc.rust-lang.org/std/convert/trait.TryFrom.html
     pub fn try_from(value: i32) -> Result<Self, TryFromIntError> {
-        use nng_pipe_ev::*;
+        use crate::nng_pipe_ev::*;
         match value {
             value if value == NNG_PIPE_EV_ADD_PRE as i32 => Ok(NNG_PIPE_EV_ADD_PRE),
             value if value == NNG_PIPE_EV_ADD_POST as i32 => Ok(NNG_PIPE_EV_ADD_POST),
@@ -145,7 +145,7 @@ impl nng_pipe_ev {
 
 impl nng_sockaddr_family {
     pub fn try_from(value: i32) -> Result<Self, TryFromIntError> {
-        use nng_sockaddr_family::*;
+        use crate::nng_sockaddr_family::*;
         match value {
             value if value == NNG_AF_UNSPEC as i32 => Ok(NNG_AF_UNSPEC),
             value if value == NNG_AF_INPROC as i32 => Ok(NNG_AF_INPROC),

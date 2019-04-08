@@ -44,6 +44,4 @@ install:
 build: false
 
 test_script:
-- ps: >-
-    if ($env:platform -eq "x86") { cargo test --features cmake-vs2017 --verbose -- "tests::" }
-        else { cargo test --features build-bindgen --verbose -- "tests::" }
+- ps: build.ps1

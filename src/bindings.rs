@@ -74,37 +74,11 @@ pub type __uint64_t = ::std::os::raw::c_ulong;
 pub struct nng_ctx_s {
     pub _bindgen_opaque_blob: u32,
 }
-#[test]
-fn bindgen_test_layout_nng_ctx_s() {
-    assert_eq!(
-        ::core::mem::size_of::<nng_ctx_s>(),
-        4usize,
-        concat!("Size of: ", stringify!(nng_ctx_s))
-    );
-    assert_eq!(
-        ::core::mem::align_of::<nng_ctx_s>(),
-        4usize,
-        concat!("Alignment of ", stringify!(nng_ctx_s))
-    );
-}
 pub type nng_ctx = nng_ctx_s;
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone)]
 pub struct nng_dialer_s {
     pub _bindgen_opaque_blob: u32,
-}
-#[test]
-fn bindgen_test_layout_nng_dialer_s() {
-    assert_eq!(
-        ::core::mem::size_of::<nng_dialer_s>(),
-        4usize,
-        concat!("Size of: ", stringify!(nng_dialer_s))
-    );
-    assert_eq!(
-        ::core::mem::align_of::<nng_dialer_s>(),
-        4usize,
-        concat!("Alignment of ", stringify!(nng_dialer_s))
-    );
 }
 pub type nng_dialer = nng_dialer_s;
 #[repr(C)]
@@ -112,56 +86,17 @@ pub type nng_dialer = nng_dialer_s;
 pub struct nng_listener_s {
     pub _bindgen_opaque_blob: u32,
 }
-#[test]
-fn bindgen_test_layout_nng_listener_s() {
-    assert_eq!(
-        ::core::mem::size_of::<nng_listener_s>(),
-        4usize,
-        concat!("Size of: ", stringify!(nng_listener_s))
-    );
-    assert_eq!(
-        ::core::mem::align_of::<nng_listener_s>(),
-        4usize,
-        concat!("Alignment of ", stringify!(nng_listener_s))
-    );
-}
 pub type nng_listener = nng_listener_s;
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone)]
 pub struct nng_pipe_s {
     pub _bindgen_opaque_blob: u32,
 }
-#[test]
-fn bindgen_test_layout_nng_pipe_s() {
-    assert_eq!(
-        ::core::mem::size_of::<nng_pipe_s>(),
-        4usize,
-        concat!("Size of: ", stringify!(nng_pipe_s))
-    );
-    assert_eq!(
-        ::core::mem::align_of::<nng_pipe_s>(),
-        4usize,
-        concat!("Alignment of ", stringify!(nng_pipe_s))
-    );
-}
 pub type nng_pipe = nng_pipe_s;
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone)]
 pub struct nng_socket_s {
     pub _bindgen_opaque_blob: u32,
-}
-#[test]
-fn bindgen_test_layout_nng_socket_s() {
-    assert_eq!(
-        ::core::mem::size_of::<nng_socket_s>(),
-        4usize,
-        concat!("Size of: ", stringify!(nng_socket_s))
-    );
-    assert_eq!(
-        ::core::mem::align_of::<nng_socket_s>(),
-        4usize,
-        concat!("Alignment of ", stringify!(nng_socket_s))
-    );
 }
 pub type nng_socket = nng_socket_s;
 pub type nng_duration = i32;
@@ -186,39 +121,6 @@ pub struct nng_sockaddr_inproc {
     pub sa_family: u16,
     pub sa_name: [::std::os::raw::c_char; 128usize],
 }
-#[test]
-fn bindgen_test_layout_nng_sockaddr_inproc() {
-    assert_eq!(
-        ::core::mem::size_of::<nng_sockaddr_inproc>(),
-        130usize,
-        concat!("Size of: ", stringify!(nng_sockaddr_inproc))
-    );
-    assert_eq!(
-        ::core::mem::align_of::<nng_sockaddr_inproc>(),
-        2usize,
-        concat!("Alignment of ", stringify!(nng_sockaddr_inproc))
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_sockaddr_inproc>())).sa_family as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_sockaddr_inproc),
-            "::",
-            stringify!(sa_family)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_sockaddr_inproc>())).sa_name as *const _ as usize },
-        2usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_sockaddr_inproc),
-            "::",
-            stringify!(sa_name)
-        )
-    );
-}
 impl Default for nng_sockaddr_inproc {
     fn default() -> Self {
         unsafe { ::core::mem::zeroed() }
@@ -229,39 +131,6 @@ impl Default for nng_sockaddr_inproc {
 pub struct nng_sockaddr_path {
     pub sa_family: u16,
     pub sa_path: [::std::os::raw::c_char; 128usize],
-}
-#[test]
-fn bindgen_test_layout_nng_sockaddr_path() {
-    assert_eq!(
-        ::core::mem::size_of::<nng_sockaddr_path>(),
-        130usize,
-        concat!("Size of: ", stringify!(nng_sockaddr_path))
-    );
-    assert_eq!(
-        ::core::mem::align_of::<nng_sockaddr_path>(),
-        2usize,
-        concat!("Alignment of ", stringify!(nng_sockaddr_path))
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_sockaddr_path>())).sa_family as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_sockaddr_path),
-            "::",
-            stringify!(sa_family)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_sockaddr_path>())).sa_path as *const _ as usize },
-        2usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_sockaddr_path),
-            "::",
-            stringify!(sa_path)
-        )
-    );
 }
 impl Default for nng_sockaddr_path {
     fn default() -> Self {
@@ -276,49 +145,6 @@ pub struct nng_sockaddr_in6 {
     pub sa_port: u16,
     pub sa_addr: [u8; 16usize],
 }
-#[test]
-fn bindgen_test_layout_nng_sockaddr_in6() {
-    assert_eq!(
-        ::core::mem::size_of::<nng_sockaddr_in6>(),
-        20usize,
-        concat!("Size of: ", stringify!(nng_sockaddr_in6))
-    );
-    assert_eq!(
-        ::core::mem::align_of::<nng_sockaddr_in6>(),
-        2usize,
-        concat!("Alignment of ", stringify!(nng_sockaddr_in6))
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_sockaddr_in6>())).sa_family as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_sockaddr_in6),
-            "::",
-            stringify!(sa_family)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_sockaddr_in6>())).sa_port as *const _ as usize },
-        2usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_sockaddr_in6),
-            "::",
-            stringify!(sa_port)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_sockaddr_in6>())).sa_addr as *const _ as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_sockaddr_in6),
-            "::",
-            stringify!(sa_addr)
-        )
-    );
-}
 pub type nng_sockaddr_udp6 = nng_sockaddr_in6;
 pub type nng_sockaddr_tcp6 = nng_sockaddr_in6;
 #[repr(C)]
@@ -328,49 +154,6 @@ pub struct nng_sockaddr_in {
     pub sa_port: u16,
     pub sa_addr: u32,
 }
-#[test]
-fn bindgen_test_layout_nng_sockaddr_in() {
-    assert_eq!(
-        ::core::mem::size_of::<nng_sockaddr_in>(),
-        8usize,
-        concat!("Size of: ", stringify!(nng_sockaddr_in))
-    );
-    assert_eq!(
-        ::core::mem::align_of::<nng_sockaddr_in>(),
-        4usize,
-        concat!("Alignment of ", stringify!(nng_sockaddr_in))
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_sockaddr_in>())).sa_family as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_sockaddr_in),
-            "::",
-            stringify!(sa_family)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_sockaddr_in>())).sa_port as *const _ as usize },
-        2usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_sockaddr_in),
-            "::",
-            stringify!(sa_port)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_sockaddr_in>())).sa_addr as *const _ as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_sockaddr_in),
-            "::",
-            stringify!(sa_addr)
-        )
-    );
-}
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone)]
 pub struct nng_sockaddr_zt {
@@ -378,59 +161,6 @@ pub struct nng_sockaddr_zt {
     pub sa_nwid: u64,
     pub sa_nodeid: u64,
     pub sa_port: u32,
-}
-#[test]
-fn bindgen_test_layout_nng_sockaddr_zt() {
-    assert_eq!(
-        ::core::mem::size_of::<nng_sockaddr_zt>(),
-        32usize,
-        concat!("Size of: ", stringify!(nng_sockaddr_zt))
-    );
-    assert_eq!(
-        ::core::mem::align_of::<nng_sockaddr_zt>(),
-        8usize,
-        concat!("Alignment of ", stringify!(nng_sockaddr_zt))
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_sockaddr_zt>())).sa_family as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_sockaddr_zt),
-            "::",
-            stringify!(sa_family)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_sockaddr_zt>())).sa_nwid as *const _ as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_sockaddr_zt),
-            "::",
-            stringify!(sa_nwid)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_sockaddr_zt>())).sa_nodeid as *const _ as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_sockaddr_zt),
-            "::",
-            stringify!(sa_nodeid)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_sockaddr_zt>())).sa_port as *const _ as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_sockaddr_zt),
-            "::",
-            stringify!(sa_port)
-        )
-    );
 }
 pub type nng_sockaddr_udp = nng_sockaddr_in;
 pub type nng_sockaddr_tcp = nng_sockaddr_in;
@@ -444,79 +174,6 @@ pub union nng_sockaddr {
     pub s_in: nng_sockaddr_in,
     pub s_zt: nng_sockaddr_zt,
     _bindgen_union_align: [u64; 17usize],
-}
-#[test]
-fn bindgen_test_layout_nng_sockaddr() {
-    assert_eq!(
-        ::core::mem::size_of::<nng_sockaddr>(),
-        136usize,
-        concat!("Size of: ", stringify!(nng_sockaddr))
-    );
-    assert_eq!(
-        ::core::mem::align_of::<nng_sockaddr>(),
-        8usize,
-        concat!("Alignment of ", stringify!(nng_sockaddr))
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_sockaddr>())).s_family as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_sockaddr),
-            "::",
-            stringify!(s_family)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_sockaddr>())).s_ipc as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_sockaddr),
-            "::",
-            stringify!(s_ipc)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_sockaddr>())).s_inproc as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_sockaddr),
-            "::",
-            stringify!(s_inproc)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_sockaddr>())).s_in6 as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_sockaddr),
-            "::",
-            stringify!(s_in6)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_sockaddr>())).s_in as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_sockaddr),
-            "::",
-            stringify!(s_in)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_sockaddr>())).s_zt as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_sockaddr),
-            "::",
-            stringify!(s_zt)
-        )
-    );
 }
 impl Default for nng_sockaddr {
     fn default() -> Self {
@@ -538,39 +195,6 @@ pub enum nng_sockaddr_family {
 pub struct nng_iov {
     pub iov_buf: *mut ::std::os::raw::c_void,
     pub iov_len: usize,
-}
-#[test]
-fn bindgen_test_layout_nng_iov() {
-    assert_eq!(
-        ::core::mem::size_of::<nng_iov>(),
-        16usize,
-        concat!("Size of: ", stringify!(nng_iov))
-    );
-    assert_eq!(
-        ::core::mem::align_of::<nng_iov>(),
-        8usize,
-        concat!("Alignment of ", stringify!(nng_iov))
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_iov>())).iov_buf as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_iov),
-            "::",
-            stringify!(iov_buf)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_iov>())).iov_len as *const _ as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_iov),
-            "::",
-            stringify!(iov_len)
-        )
-    );
 }
 impl Default for nng_iov {
     fn default() -> Self {
@@ -702,7 +326,6 @@ pub enum nng_pipe_ev {
     NNG_PIPE_EV_ADD_PRE = 0,
     NNG_PIPE_EV_ADD_POST = 1,
     NNG_PIPE_EV_REM_POST = 2,
-    NNG_PIPE_EV_NUM = 3,
 }
 pub type nng_pipe_cb = ::core::option::Option<
     unsafe extern "C" fn(
@@ -1594,119 +1217,6 @@ pub struct nng_url {
     pub u_query: *mut ::std::os::raw::c_char,
     pub u_fragment: *mut ::std::os::raw::c_char,
     pub u_requri: *mut ::std::os::raw::c_char,
-}
-#[test]
-fn bindgen_test_layout_nng_url() {
-    assert_eq!(
-        ::core::mem::size_of::<nng_url>(),
-        80usize,
-        concat!("Size of: ", stringify!(nng_url))
-    );
-    assert_eq!(
-        ::core::mem::align_of::<nng_url>(),
-        8usize,
-        concat!("Alignment of ", stringify!(nng_url))
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_url>())).u_rawurl as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_url),
-            "::",
-            stringify!(u_rawurl)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_url>())).u_scheme as *const _ as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_url),
-            "::",
-            stringify!(u_scheme)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_url>())).u_userinfo as *const _ as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_url),
-            "::",
-            stringify!(u_userinfo)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_url>())).u_host as *const _ as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_url),
-            "::",
-            stringify!(u_host)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_url>())).u_hostname as *const _ as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_url),
-            "::",
-            stringify!(u_hostname)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_url>())).u_port as *const _ as usize },
-        40usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_url),
-            "::",
-            stringify!(u_port)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_url>())).u_path as *const _ as usize },
-        48usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_url),
-            "::",
-            stringify!(u_path)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_url>())).u_query as *const _ as usize },
-        56usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_url),
-            "::",
-            stringify!(u_query)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_url>())).u_fragment as *const _ as usize },
-        64usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_url),
-            "::",
-            stringify!(u_fragment)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<nng_url>())).u_requri as *const _ as usize },
-        72usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(nng_url),
-            "::",
-            stringify!(u_requri)
-        )
-    );
 }
 impl Default for nng_url {
     fn default() -> Self {

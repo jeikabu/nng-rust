@@ -35,11 +35,7 @@ pub const NNG_OPT_TLS_SERVER_NAME: &'static [u8; 16usize] = b"tls-server-name\0"
 pub const NNG_OPT_TLS_VERIFIED: &'static [u8; 13usize] = b"tls-verified\0";
 pub const NNG_OPT_TCP_NODELAY: &'static [u8; 12usize] = b"tcp-nodelay\0";
 pub const NNG_OPT_TCP_KEEPALIVE: &'static [u8; 14usize] = b"tcp-keepalive\0";
-pub const NNG_OPT_PAIR1_POLY: &'static [u8; 18usize] = b"pair1:polyamorous\0";
-pub const NNG_OPT_SUB_SUBSCRIBE: &'static [u8; 14usize] = b"sub:subscribe\0";
-pub const NNG_OPT_SUB_UNSUBSCRIBE: &'static [u8; 16usize] = b"sub:unsubscribe\0";
-pub const NNG_OPT_REQ_RESENDTIME: &'static [u8; 16usize] = b"req:resend-time\0";
-pub const NNG_OPT_SURVEYOR_SURVEYTIME: &'static [u8; 21usize] = b"surveyor:survey-time\0";
+pub const NNG_OPT_TCP_BOUND_PORT: &'static [u8; 15usize] = b"tcp-bound-port\0";
 pub const NNG_OPT_IPC_SECURITY_DESCRIPTOR: &'static [u8; 24usize] = b"ipc:security-descriptor\0";
 pub const NNG_OPT_IPC_PERMISSIONS: &'static [u8; 16usize] = b"ipc:permissions\0";
 pub const NNG_OPT_IPC_PEER_UID: &'static [u8; 13usize] = b"ipc:peer-uid\0";
@@ -48,6 +44,17 @@ pub const NNG_OPT_IPC_PEER_PID: &'static [u8; 13usize] = b"ipc:peer-pid\0";
 pub const NNG_OPT_IPC_PEER_ZONEID: &'static [u8; 16usize] = b"ipc:peer-zoneid\0";
 pub const NNG_OPT_WS_REQUEST_HEADERS: &'static [u8; 19usize] = b"ws:request-headers\0";
 pub const NNG_OPT_WS_RESPONSE_HEADERS: &'static [u8; 20usize] = b"ws:response-headers\0";
+pub const NNG_OPT_WS_RESPONSE_HEADER: &'static [u8; 20usize] = b"ws:response-header:\0";
+pub const NNG_OPT_WS_REQUEST_HEADER: &'static [u8; 19usize] = b"ws:request-header:\0";
+pub const NNG_OPT_WS_REQUEST_URI: &'static [u8; 15usize] = b"ws:request-uri\0";
+pub const NNG_OPT_WS_SENDMAXFRAME: &'static [u8; 15usize] = b"ws:txframe-max\0";
+pub const NNG_OPT_WS_RECVMAXFRAME: &'static [u8; 15usize] = b"ws:rxframe-max\0";
+pub const NNG_OPT_WS_PROTOCOL: &'static [u8; 12usize] = b"ws:protocol\0";
+pub const NNG_OPT_PAIR1_POLY: &'static [u8; 18usize] = b"pair1:polyamorous\0";
+pub const NNG_OPT_SUB_SUBSCRIBE: &'static [u8; 14usize] = b"sub:subscribe\0";
+pub const NNG_OPT_SUB_UNSUBSCRIBE: &'static [u8; 16usize] = b"sub:unsubscribe\0";
+pub const NNG_OPT_REQ_RESENDTIME: &'static [u8; 16usize] = b"req:resend-time\0";
+pub const NNG_OPT_SURVEYOR_SURVEYTIME: &'static [u8; 21usize] = b"surveyor:survey-time\0";
 pub const NNG_OPT_WSS_REQUEST_HEADERS: &'static [u8; 19usize] = b"ws:request-headers\0";
 pub const NNG_OPT_WSS_RESPONSE_HEADERS: &'static [u8; 20usize] = b"ws:response-headers\0";
 pub const NNG_OPT_ZT_HOME: &'static [u8; 8usize] = b"zt:home\0";
@@ -320,6 +327,141 @@ extern "C" {
         arg3: *mut *mut ::std::os::raw::c_void,
     ) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn nng_getopt_string(
+        arg1: nng_socket,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut *mut ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_socket_set(
+        arg1: nng_socket,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *const ::std::os::raw::c_void,
+        arg4: usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_socket_set_bool(
+        arg1: nng_socket,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: bool,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_socket_set_int(
+        arg1: nng_socket,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_socket_set_size(
+        arg1: nng_socket,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_socket_set_uint64(
+        arg1: nng_socket,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: u64,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_socket_set_string(
+        arg1: nng_socket,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *const ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_socket_set_ptr(
+        arg1: nng_socket,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_socket_set_ms(
+        arg1: nng_socket,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: nng_duration,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_socket_set_addr(
+        arg1: nng_socket,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *const nng_sockaddr,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_socket_get(
+        arg1: nng_socket,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut ::std::os::raw::c_void,
+        arg4: *mut usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_socket_get_bool(
+        arg1: nng_socket,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut bool,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_socket_get_int(
+        arg1: nng_socket,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_socket_get_size(
+        arg1: nng_socket,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_socket_get_uint64(
+        arg1: nng_socket,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut u64,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_socket_get_string(
+        arg1: nng_socket,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut *mut ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_socket_get_ptr(
+        arg1: nng_socket,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_socket_get_ms(
+        arg1: nng_socket,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut nng_duration,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_socket_get_addr(
+        arg1: nng_socket,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut nng_sockaddr,
+    ) -> ::std::os::raw::c_int;
+}
 #[repr(u32)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub enum nng_pipe_ev {
@@ -328,25 +470,14 @@ pub enum nng_pipe_ev {
     NNG_PIPE_EV_REM_POST = 2,
 }
 pub type nng_pipe_cb = ::core::option::Option<
-    unsafe extern "C" fn(
-        arg1: nng_pipe,
-        arg2: ::std::os::raw::c_int,
-        arg3: *mut ::std::os::raw::c_void,
-    ),
+    unsafe extern "C" fn(arg1: nng_pipe, arg2: nng_pipe_ev, arg3: *mut ::std::os::raw::c_void),
 >;
 extern "C" {
     pub fn nng_pipe_notify(
         arg1: nng_socket,
-        arg2: ::std::os::raw::c_int,
+        arg2: nng_pipe_ev,
         arg3: nng_pipe_cb,
         arg4: *mut ::std::os::raw::c_void,
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn nng_getopt_string(
-        arg1: nng_socket,
-        arg2: *const ::std::os::raw::c_char,
-        arg3: *mut *mut ::std::os::raw::c_char,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -523,6 +654,134 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn nng_dialer_set(
+        arg1: nng_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *const ::std::os::raw::c_void,
+        arg4: usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_dialer_set_bool(
+        arg1: nng_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: bool,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_dialer_set_int(
+        arg1: nng_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_dialer_set_size(
+        arg1: nng_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_dialer_set_uint64(
+        arg1: nng_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: u64,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_dialer_set_string(
+        arg1: nng_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *const ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_dialer_set_ptr(
+        arg1: nng_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_dialer_set_ms(
+        arg1: nng_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: nng_duration,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_dialer_set_addr(
+        arg1: nng_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *const nng_sockaddr,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_dialer_get(
+        arg1: nng_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut ::std::os::raw::c_void,
+        arg4: *mut usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_dialer_get_bool(
+        arg1: nng_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut bool,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_dialer_get_int(
+        arg1: nng_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_dialer_get_size(
+        arg1: nng_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_dialer_get_uint64(
+        arg1: nng_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut u64,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_dialer_get_string(
+        arg1: nng_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut *mut ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_dialer_get_ptr(
+        arg1: nng_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_dialer_get_ms(
+        arg1: nng_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut nng_duration,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_dialer_get_addr(
+        arg1: nng_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut nng_sockaddr,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn nng_listener_setopt(
         arg1: nng_listener,
         arg2: *const ::std::os::raw::c_char,
@@ -641,6 +900,134 @@ extern "C" {
         arg1: nng_listener,
         arg2: *const ::std::os::raw::c_char,
         arg3: *mut *mut ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_listener_set(
+        arg1: nng_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *const ::std::os::raw::c_void,
+        arg4: usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_listener_set_bool(
+        arg1: nng_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: bool,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_listener_set_int(
+        arg1: nng_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_listener_set_size(
+        arg1: nng_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_listener_set_uint64(
+        arg1: nng_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: u64,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_listener_set_string(
+        arg1: nng_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *const ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_listener_set_ptr(
+        arg1: nng_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_listener_set_ms(
+        arg1: nng_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: nng_duration,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_listener_set_addr(
+        arg1: nng_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *const nng_sockaddr,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_listener_get(
+        arg1: nng_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut ::std::os::raw::c_void,
+        arg4: *mut usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_listener_get_bool(
+        arg1: nng_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut bool,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_listener_get_int(
+        arg1: nng_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_listener_get_size(
+        arg1: nng_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_listener_get_uint64(
+        arg1: nng_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut u64,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_listener_get_string(
+        arg1: nng_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut *mut ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_listener_get_ptr(
+        arg1: nng_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_listener_get_ms(
+        arg1: nng_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut nng_duration,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_listener_get_addr(
+        arg1: nng_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut nng_sockaddr,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -767,6 +1154,134 @@ extern "C" {
         arg1: nng_ctx,
         arg2: *const ::std::os::raw::c_char,
         arg3: usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_ctx_get(
+        arg1: nng_ctx,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut ::std::os::raw::c_void,
+        arg4: *mut usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_ctx_get_bool(
+        arg1: nng_ctx,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut bool,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_ctx_get_int(
+        arg1: nng_ctx,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_ctx_get_size(
+        arg1: nng_ctx,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_ctx_get_uint64(
+        arg1: nng_ctx,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut u64,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_ctx_get_string(
+        arg1: nng_ctx,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut *mut ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_ctx_get_ptr(
+        arg1: nng_ctx,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_ctx_get_ms(
+        arg1: nng_ctx,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut nng_duration,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_ctx_get_addr(
+        arg1: nng_ctx,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut nng_sockaddr,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_ctx_set(
+        arg1: nng_ctx,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *const ::std::os::raw::c_void,
+        arg4: usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_ctx_set_bool(
+        arg1: nng_ctx,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: bool,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_ctx_set_int(
+        arg1: nng_ctx,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_ctx_set_size(
+        arg1: nng_ctx,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_ctx_set_uint64(
+        arg1: nng_ctx,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: u64,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_ctx_set_string(
+        arg1: nng_ctx,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *const ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_ctx_set_ptr(
+        arg1: nng_ctx,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_ctx_set_ms(
+        arg1: nng_ctx,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: nng_duration,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_ctx_set_addr(
+        arg1: nng_ctx,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *const nng_sockaddr,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -1095,6 +1610,70 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn nng_pipe_get(
+        arg1: nng_pipe,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut ::std::os::raw::c_void,
+        arg4: *mut usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_pipe_get_bool(
+        arg1: nng_pipe,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut bool,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_pipe_get_int(
+        arg1: nng_pipe,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_pipe_get_ms(
+        arg1: nng_pipe,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut nng_duration,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_pipe_get_size(
+        arg1: nng_pipe,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_pipe_get_uint64(
+        arg1: nng_pipe,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut u64,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_pipe_get_string(
+        arg1: nng_pipe,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut *mut ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_pipe_get_ptr(
+        arg1: nng_pipe,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_pipe_get_addr(
+        arg1: nng_pipe,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut nng_sockaddr,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn nng_pipe_close(arg1: nng_pipe) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -1237,6 +1816,462 @@ extern "C" {
 }
 extern "C" {
     pub fn nng_version() -> *const ::std::os::raw::c_char;
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct nng_stream {
+    _unused: [u8; 0],
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct nng_stream_dialer {
+    _unused: [u8; 0],
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct nng_stream_listener {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn nng_stream_free(arg1: *mut nng_stream);
+}
+extern "C" {
+    pub fn nng_stream_close(arg1: *mut nng_stream);
+}
+extern "C" {
+    pub fn nng_stream_send(arg1: *mut nng_stream, arg2: *mut nng_aio);
+}
+extern "C" {
+    pub fn nng_stream_recv(arg1: *mut nng_stream, arg2: *mut nng_aio);
+}
+extern "C" {
+    pub fn nng_stream_get(
+        arg1: *mut nng_stream,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut ::std::os::raw::c_void,
+        arg4: *mut usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_get_bool(
+        arg1: *mut nng_stream,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut bool,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_get_int(
+        arg1: *mut nng_stream,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_get_ms(
+        arg1: *mut nng_stream,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut nng_duration,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_get_size(
+        arg1: *mut nng_stream,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_get_uint64(
+        arg1: *mut nng_stream,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut u64,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_get_string(
+        arg1: *mut nng_stream,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut *mut ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_get_ptr(
+        arg1: *mut nng_stream,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_get_addr(
+        arg1: *mut nng_stream,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut nng_sockaddr,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_set(
+        arg1: *mut nng_stream,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *const ::std::os::raw::c_void,
+        arg4: usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_set_bool(
+        arg1: *mut nng_stream,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: bool,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_set_int(
+        arg1: *mut nng_stream,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_set_ms(
+        arg1: *mut nng_stream,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: nng_duration,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_set_size(
+        arg1: *mut nng_stream,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_set_uint64(
+        arg1: *mut nng_stream,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: u64,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_set_string(
+        arg1: *mut nng_stream,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *const ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_set_ptr(
+        arg1: *mut nng_stream,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_set_addr(
+        arg1: *mut nng_stream,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *const nng_sockaddr,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_dialer_alloc(
+        arg1: *mut *mut nng_stream_dialer,
+        arg2: *const ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_dialer_alloc_url(
+        arg1: *mut *mut nng_stream_dialer,
+        arg2: *const nng_url,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_dialer_free(arg1: *mut nng_stream_dialer);
+}
+extern "C" {
+    pub fn nng_stream_dialer_close(arg1: *mut nng_stream_dialer);
+}
+extern "C" {
+    pub fn nng_stream_dialer_dial(arg1: *mut nng_stream_dialer, arg2: *mut nng_aio);
+}
+extern "C" {
+    pub fn nng_stream_dialer_set(
+        arg1: *mut nng_stream_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *const ::std::os::raw::c_void,
+        arg4: usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_dialer_get(
+        arg1: *mut nng_stream_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut ::std::os::raw::c_void,
+        arg4: *mut usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_dialer_get_bool(
+        arg1: *mut nng_stream_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut bool,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_dialer_get_int(
+        arg1: *mut nng_stream_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_dialer_get_ms(
+        arg1: *mut nng_stream_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut nng_duration,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_dialer_get_size(
+        arg1: *mut nng_stream_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_dialer_get_uint64(
+        arg1: *mut nng_stream_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut u64,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_dialer_get_string(
+        arg1: *mut nng_stream_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut *mut ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_dialer_get_ptr(
+        arg1: *mut nng_stream_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_dialer_get_addr(
+        arg1: *mut nng_stream_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut nng_sockaddr,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_dialer_set_bool(
+        arg1: *mut nng_stream_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: bool,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_dialer_set_int(
+        arg1: *mut nng_stream_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_dialer_set_ms(
+        arg1: *mut nng_stream_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: nng_duration,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_dialer_set_size(
+        arg1: *mut nng_stream_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_dialer_set_uint64(
+        arg1: *mut nng_stream_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: u64,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_dialer_set_string(
+        arg1: *mut nng_stream_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *const ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_dialer_set_ptr(
+        arg1: *mut nng_stream_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_dialer_set_addr(
+        arg1: *mut nng_stream_dialer,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *const nng_sockaddr,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_listener_alloc(
+        arg1: *mut *mut nng_stream_listener,
+        arg2: *const ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_listener_alloc_url(
+        arg1: *mut *mut nng_stream_listener,
+        arg2: *const nng_url,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_listener_free(arg1: *mut nng_stream_listener);
+}
+extern "C" {
+    pub fn nng_stream_listener_close(arg1: *mut nng_stream_listener);
+}
+extern "C" {
+    pub fn nng_stream_listener_listen(arg1: *mut nng_stream_listener) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_listener_accept(arg1: *mut nng_stream_listener, arg2: *mut nng_aio);
+}
+extern "C" {
+    pub fn nng_stream_listener_set(
+        arg1: *mut nng_stream_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *const ::std::os::raw::c_void,
+        arg4: usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_listener_get(
+        arg1: *mut nng_stream_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut ::std::os::raw::c_void,
+        arg4: *mut usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_listener_get_bool(
+        arg1: *mut nng_stream_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut bool,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_listener_get_int(
+        arg1: *mut nng_stream_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_listener_get_ms(
+        arg1: *mut nng_stream_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut nng_duration,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_listener_get_size(
+        arg1: *mut nng_stream_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_listener_get_uint64(
+        arg1: *mut nng_stream_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut u64,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_listener_get_string(
+        arg1: *mut nng_stream_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut *mut ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_listener_get_ptr(
+        arg1: *mut nng_stream_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_listener_get_addr(
+        arg1: *mut nng_stream_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut nng_sockaddr,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_listener_set_bool(
+        arg1: *mut nng_stream_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: bool,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_listener_set_int(
+        arg1: *mut nng_stream_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_listener_set_ms(
+        arg1: *mut nng_stream_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: nng_duration,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_listener_set_size(
+        arg1: *mut nng_stream_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_listener_set_uint64(
+        arg1: *mut nng_stream_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: u64,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_listener_set_string(
+        arg1: *mut nng_stream_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *const ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_listener_set_ptr(
+        arg1: *mut nng_stream_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn nng_stream_listener_set_addr(
+        arg1: *mut nng_stream_listener,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *const nng_sockaddr,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn nng_bus0_open(arg1: *mut nng_socket) -> ::std::os::raw::c_int;

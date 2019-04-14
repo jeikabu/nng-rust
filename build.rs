@@ -1,6 +1,14 @@
 fn main() {
+    cfg();
     link_nng();
     build_bindgen();
+}
+
+fn cfg() {
+    match version_check::is_min_version("1.34.0") {
+        Some((true, _version)) => println!("cargo:rustc-cfg=try_from"),
+        _ => {}
+    }
 }
 
 #[cfg(feature = "build-nng")]

@@ -62,6 +62,9 @@ mod bindings {
 #[cfg(not(feature = "build-bindgen"))]
 mod bindings;
 
+#[cfg(try_from)]
+use core::convert::TryFrom;
+
 pub use crate::bindings::*;
 
 impl nng_pipe {
@@ -94,81 +97,85 @@ impl nng_ctx {
     };
 }
 
+/// The error type returned when unable to convert an integer to an enum value.
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+#[cfg(try_from)]
+pub struct EnumFromIntError(pub i32);
+
+#[cfg(try_from)]
+#[cfg(not(feature = "no_std"))]
+impl std::fmt::Display for EnumFromIntError {
+    fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(fmt, "EnumFromIntError({})", self.0)
+    }
+}
+
 impl nng_stat_type_enum {
-    // TODO: 1.33/1.34 replace this with TryFrom once stabilized:
-    // https://doc.rust-lang.org/std/convert/trait.TryFrom.html
     /// Converts value returned by [nng_stat_type](https://nanomsg.github.io/nng/man/v1.1.0/nng_stat_type.3) into `nng_stat_type_enum`.
-    pub fn try_from(value: i32) -> Result<Self, TryFromIntError> {
+    pub fn try_convert_from(value: i32) -> Option<Self> {
         use crate::nng_stat_type_enum::*;
         match value {
-            value if value == NNG_STAT_SCOPE as i32 => Ok(NNG_STAT_SCOPE),
-            value if value == NNG_STAT_LEVEL as i32 => Ok(NNG_STAT_LEVEL),
-            value if value == NNG_STAT_COUNTER as i32 => Ok(NNG_STAT_COUNTER),
-            value if value == NNG_STAT_STRING as i32 => Ok(NNG_STAT_STRING),
-            value if value == NNG_STAT_BOOLEAN as i32 => Ok(NNG_STAT_BOOLEAN),
-            value if value == NNG_STAT_ID as i32 => Ok(NNG_STAT_ID),
-            _ => Err(TryFromIntError),
+            value if value == NNG_STAT_SCOPE as i32 => Some(NNG_STAT_SCOPE),
+            value if value == NNG_STAT_LEVEL as i32 => Some(NNG_STAT_LEVEL),
+            value if value == NNG_STAT_COUNTER as i32 => Some(NNG_STAT_COUNTER),
+            value if value == NNG_STAT_STRING as i32 => Some(NNG_STAT_STRING),
+            value if value == NNG_STAT_BOOLEAN as i32 => Some(NNG_STAT_BOOLEAN),
+            value if value == NNG_STAT_ID as i32 => Some(NNG_STAT_ID),
+            _ => None,
         }
+    }
+}
+
+#[cfg(try_from)]
+impl TryFrom<i32> for nng_stat_type_enum {
+    type Error = EnumFromIntError;
+    fn try_from(value: i32) -> Result<Self, Self::Error> {
+        nng_stat_type_enum::try_convert_from(value).ok_or(EnumFromIntError(value))
     }
 }
 
 impl nng_unit_enum {
-    // TODO: 1.33/1.34 replace this with TryFrom once stabilized:
-    // https://doc.rust-lang.org/std/convert/trait.TryFrom.html
     /// Converts value returned by [nng_stat_unit](https://nanomsg.github.io/nng/man/v1.1.0/nng_stat_unit.3) into `nng_unit_enum`.
-    pub fn try_from(value: i32) -> Result<Self, TryFromIntError> {
+    pub fn try_convert_from(value: i32) -> Option<Self> {
         use crate::nng_unit_enum::*;
         match value {
-            value if value == NNG_UNIT_NONE as i32 => Ok(NNG_UNIT_NONE),
-            value if value == NNG_UNIT_BYTES as i32 => Ok(NNG_UNIT_BYTES),
-            value if value == NNG_UNIT_MESSAGES as i32 => Ok(NNG_UNIT_MESSAGES),
-            value if value == NNG_UNIT_MILLIS as i32 => Ok(NNG_UNIT_MILLIS),
-            value if value == NNG_UNIT_EVENTS as i32 => Ok(NNG_UNIT_EVENTS),
-            _ => Err(TryFromIntError),
+            value if value == NNG_UNIT_NONE as i32 => Some(NNG_UNIT_NONE),
+            value if value == NNG_UNIT_BYTES as i32 => Some(NNG_UNIT_BYTES),
+            value if value == NNG_UNIT_MESSAGES as i32 => Some(NNG_UNIT_MESSAGES),
+            value if value == NNG_UNIT_MILLIS as i32 => Some(NNG_UNIT_MILLIS),
+            value if value == NNG_UNIT_EVENTS as i32 => Some(NNG_UNIT_EVENTS),
+            _ => None,
         }
     }
 }
 
-impl nng_pipe_ev {
-    // TODO: 1.33/1.34 replace this with TryFrom once stabilized:
-    // https://doc.rust-lang.org/std/convert/trait.TryFrom.html
-    pub fn try_from(value: i32) -> Result<Self, TryFromIntError> {
-        use crate::nng_pipe_ev::*;
-        match value {
-            value if value == NNG_PIPE_EV_ADD_PRE as i32 => Ok(NNG_PIPE_EV_ADD_PRE),
-            value if value == NNG_PIPE_EV_ADD_POST as i32 => Ok(NNG_PIPE_EV_ADD_POST),
-            value if value == NNG_PIPE_EV_REM_POST as i32 => Ok(NNG_PIPE_EV_REM_POST),
-            _ => Err(TryFromIntError),
-        }
+#[cfg(try_from)]
+impl TryFrom<i32> for nng_unit_enum {
+    type Error = EnumFromIntError;
+    fn try_from(value: i32) -> Result<Self, Self::Error> {
+        nng_unit_enum::try_convert_from(value).ok_or(EnumFromIntError(value))
     }
 }
 
 impl nng_sockaddr_family {
-    pub fn try_from(value: i32) -> Result<Self, TryFromIntError> {
+    pub fn try_convert_from(value: i32) -> Option<Self> {
         use crate::nng_sockaddr_family::*;
         match value {
-            value if value == NNG_AF_UNSPEC as i32 => Ok(NNG_AF_UNSPEC),
-            value if value == NNG_AF_INPROC as i32 => Ok(NNG_AF_INPROC),
-            value if value == NNG_AF_IPC as i32 => Ok(NNG_AF_IPC),
-            value if value == NNG_AF_INET as i32 => Ok(NNG_AF_INET),
-            value if value == NNG_AF_INET6 as i32 => Ok(NNG_AF_INET6),
-            value if value == NNG_AF_ZT as i32 => Ok(NNG_AF_ZT),
-            _ => Err(TryFromIntError),
+            value if value == NNG_AF_UNSPEC as i32 => Some(NNG_AF_UNSPEC),
+            value if value == NNG_AF_INPROC as i32 => Some(NNG_AF_INPROC),
+            value if value == NNG_AF_IPC as i32 => Some(NNG_AF_IPC),
+            value if value == NNG_AF_INET as i32 => Some(NNG_AF_INET),
+            value if value == NNG_AF_INET6 as i32 => Some(NNG_AF_INET6),
+            value if value == NNG_AF_ZT as i32 => Some(NNG_AF_ZT),
+            _ => None,
         }
     }
 }
 
-// TODO: 1.33/1.34 replace this with TryFrom once stabilized:
-// https://doc.rust-lang.org/std/num/struct.TryFromIntError.html
-#[derive(Clone, Copy, Debug, PartialEq)]
-pub struct TryFromIntError;
-
-#[cfg(not(feature = "no_std"))]
-impl std::fmt::Display for TryFromIntError {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "TryFromIntError")
+#[cfg(try_from)]
+impl TryFrom<i32> for nng_sockaddr_family {
+    type Error = EnumFromIntError;
+    fn try_from(value: i32) -> Result<Self, Self::Error> {
+        nng_sockaddr_family::try_convert_from(value).ok_or(EnumFromIntError(value))
     }
 }
-
-#[cfg(not(feature = "no_std"))]
-impl std::error::Error for TryFromIntError {}

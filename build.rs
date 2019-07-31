@@ -8,7 +8,6 @@ fn link_nng() {
     struct Generator(&'static str);
     const UNIX_MAKEFILES: Generator = Generator("Unix Makefiles");
     const NINJA: Generator = Generator("Ninja");
-    const VS2017_WIN64: Generator = Generator("Visual Studio 15 2017 Win64");
     const VS2017: Generator = Generator("Visual Studio 15 2017");
 
     // Compile time settings
@@ -17,7 +16,7 @@ fn link_nng() {
     } else if cfg!(feature = "cmake-ninja") {
         NINJA
     } else if cfg!(feature = "cmake-vs2017-win64") {
-        VS2017_WIN64
+        VS2017
     } else if cfg!(feature = "cmake-vs2017") {
         VS2017
     } else {
@@ -25,7 +24,7 @@ fn link_nng() {
         if cfg!(target_family = "unix") {
             UNIX_MAKEFILES
         } else {
-            VS2017_WIN64
+            VS2017
         }
     };
 

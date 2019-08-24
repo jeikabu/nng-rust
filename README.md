@@ -31,8 +31,8 @@ Requirements:
 - `build-bindgen`: run bindgen to re-generate Rust FFI bindings to C
 - `cmake-unix`: use cmake generator "Unix Makefiles" (default on Linux/macOS)
 - `cmake-ninja`: use cmake generator "Ninja"
-- `cmake-vs2017`: use cmake generator "Visual Studio 15 2017"
-- `cmake-vs2017-win64`: use cmake generator "Visual Studio 15 2017 Win64" (default on Windows)
+- `cmake-vs2017`: use cmake generator "Visual Studio 15 2017" (default on Windows)
+- `cmake-vs2019`: use cmake generator "Visual Studio 16 2019"
 - `nng-stats`: enable NNG stats `NNG_ENABLE_STATS` (enabled by default)
 - `nng-tls`: enable TLS `NNG_ENABLE_TLS` (requires mbedTLS)
 - `nng-supplemental`: generate bindings to NNG's supplemental functions

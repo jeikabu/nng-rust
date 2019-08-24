@@ -9,16 +9,17 @@ fn link_nng() {
     const UNIX_MAKEFILES: Generator = Generator("Unix Makefiles");
     const NINJA: Generator = Generator("Ninja");
     const VS2017: Generator = Generator("Visual Studio 15 2017");
+    const VS2019: Generator = Generator("Visual Studio 16 2019");
 
     // Compile time settings
     let generator = if cfg!(feature = "cmake-unix") {
         UNIX_MAKEFILES
     } else if cfg!(feature = "cmake-ninja") {
         NINJA
-    } else if cfg!(feature = "cmake-vs2017-win64") {
+    } else if cfg!(feature = "cmake-vs2017") || cfg!(feature = "cmake-vs2017-win64") {
         VS2017
-    } else if cfg!(feature = "cmake-vs2017") {
-        VS2017
+    } else if cfg!(feature = "cmake-vs2019") {
+        VS2019
     } else {
         // Default generators
         if cfg!(target_family = "unix") {

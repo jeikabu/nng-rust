@@ -28,6 +28,7 @@ cmake-unix = ["build-nng"]
 cmake-ninja = ["build-nng"]
 cmake-vs2017-win64 = ["build-nng"]
 cmake-vs2017 = ["build-nng"]
+cmake-vs2019 = ["build-nng"]
 
 # NNG Options
 nng-stats = ["build-nng"]
@@ -45,7 +46,7 @@ source-update-bindings = ["build-bindgen"]
 cty = {version = "0.2", optional = true}
 
 [build-dependencies]
-cmake = {version = "0.1", optional = true}
+cmake = {version = "^0.1.36", optional = true}
 bindgen = {version = "0.47", optional = true}
 
 [package.metadata.docs.rs]

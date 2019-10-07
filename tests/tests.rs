@@ -40,5 +40,4 @@ mod tests {
             nng_close(rep_socket);
         }
     }
-
 }

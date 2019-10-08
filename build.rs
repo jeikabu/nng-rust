@@ -13,20 +13,15 @@ fn link_nng() {
 
     // Compile time settings
     let generator = if cfg!(feature = "cmake-unix") {
-        UNIX_MAKEFILES
+        Some(UNIX_MAKEFILES)
     } else if cfg!(feature = "cmake-ninja") {
-        NINJA
+        Some(NINJA)
     } else if cfg!(feature = "cmake-vs2017") || cfg!(feature = "cmake-vs2017-win64") {
-        VS2017
+        Some(VS2017)
     } else if cfg!(feature = "cmake-vs2019") {
-        VS2019
+        Some(VS2019)
     } else {
-        // Default generators
-        if cfg!(target_family = "unix") {
-            UNIX_MAKEFILES
-        } else {
-            VS2017
-        }
+        None
     };
 
     let stats = if cfg!(feature = "nng-stats") {
@@ -42,13 +37,16 @@ fn link_nng() {
     };
 
     // Run cmake to build nng
-    let dst = cmake::Config::new("nng")
-        .generator(generator.0)
+    let mut config = cmake::Config::new("nng");
+    config
         .define("NNG_TESTS", "OFF")
         .define("NNG_TOOLS", "OFF")
         .define("NNG_ENABLE_STATS", stats)
-        .define("NNG_ENABLE_TLS", tls)
-        .build();
+        .define("NNG_ENABLE_TLS", tls);
+    if let Some(generator) = generator {
+        config.generator(generator.0);
+    }
+    let dst = config.build();
 
     // Check output of `cargo build --verbose`, should see something like:
     // -L native=/path/runng/target/debug/build/runng-sys-abc1234/out

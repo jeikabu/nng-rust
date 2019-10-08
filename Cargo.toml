@@ -48,6 +48,7 @@ cty = {version = "0.2", optional = true}
 [build-dependencies]
 cmake = {version = "^0.1.36", optional = true}
 bindgen = {version = "0.47", optional = true}
+version_check = "0.1"
 
 [package.metadata.docs.rs]
 all-features = false

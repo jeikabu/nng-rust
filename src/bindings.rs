@@ -1779,6 +1779,7 @@ pub const NNG_EPEERAUTH: nng_errno_enum = 27;
 pub const NNG_ENOARG: nng_errno_enum = 28;
 pub const NNG_EAMBIGUOUS: nng_errno_enum = 29;
 pub const NNG_EBADTYPE: nng_errno_enum = 30;
+pub const NNG_ECONNSHUT: nng_errno_enum = 31;
 pub const NNG_EINTERNAL: nng_errno_enum = 1000;
 pub const NNG_ESYSERR: nng_errno_enum = 268435456;
 pub const NNG_ETRANERR: nng_errno_enum = 536870912;

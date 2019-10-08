@@ -84,7 +84,7 @@ fn build_bindgen() {
 
     let mut builder = bindgen::Builder::default()
         // This is needed if use `#include <nng.h>` instead of `#include "path/nng.h"` in wrapper.h
-        //.clang_arg("-Inng/src/")
+        .clang_arg("-Inng/include/")
         .header("src/wrapper.h")
         // #[derive(Default)]
         .derive_default(true)

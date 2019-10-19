@@ -46,12 +46,7 @@ source-update-bindings = ["build-bindgen"]
 cty = {version = "0.2", optional = true}
 
 [build-dependencies]
-<<<<<<< HEAD
-version_check = "0.1"
-cmake = {version = "0.1", optional = true}
-=======
 cmake = {version = "^0.1.36", optional = true}
->>>>>>> aaa71f8f953352ad219a215b81cac9ee1e87dfc4
 bindgen = {version = "0.47", optional = true}
 version_check = "0.1"
 

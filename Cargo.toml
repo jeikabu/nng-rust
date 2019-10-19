@@ -1,6 +1,6 @@
 [package]
 name = "nng-sys"
-version = "1.1.1-rc.1"
+version = "1.1.1-rc.2"
 authors = ["Nathan Kent <nate@nkent.net>", "Jake W <jeikabu@gmail.com>"]
 
 description = "Bindings to NNG (Nanomsg-Next-Generation) aka Nanomsg2"
@@ -28,6 +28,7 @@ cmake-unix = ["build-nng"]
 cmake-ninja = ["build-nng"]
 cmake-vs2017-win64 = ["build-nng"]
 cmake-vs2017 = ["build-nng"]
+cmake-vs2019 = ["build-nng"]
 
 # NNG Options
 nng-stats = ["build-nng"]
@@ -45,9 +46,14 @@ source-update-bindings = ["build-bindgen"]
 cty = {version = "0.2", optional = true}
 
 [build-dependencies]
+<<<<<<< HEAD
 version_check = "0.1"
 cmake = {version = "0.1", optional = true}
+=======
+cmake = {version = "^0.1.36", optional = true}
+>>>>>>> aaa71f8f953352ad219a215b81cac9ee1e87dfc4
 bindgen = {version = "0.47", optional = true}
+version_check = "0.1"
 
 [package.metadata.docs.rs]
 all-features = false

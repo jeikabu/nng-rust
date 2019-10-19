@@ -16,25 +16,20 @@ fn link_nng() {
     struct Generator(&'static str);
     const UNIX_MAKEFILES: Generator = Generator("Unix Makefiles");
     const NINJA: Generator = Generator("Ninja");
-    const VS2017_WIN64: Generator = Generator("Visual Studio 15 2017 Win64");
     const VS2017: Generator = Generator("Visual Studio 15 2017");
+    const VS2019: Generator = Generator("Visual Studio 16 2019");
 
     // Compile time settings
     let generator = if cfg!(feature = "cmake-unix") {
-        UNIX_MAKEFILES
+        Some(UNIX_MAKEFILES)
     } else if cfg!(feature = "cmake-ninja") {
-        NINJA
-    } else if cfg!(feature = "cmake-vs2017-win64") {
-        VS2017_WIN64
-    } else if cfg!(feature = "cmake-vs2017") {
-        VS2017
+        Some(NINJA)
+    } else if cfg!(feature = "cmake-vs2017") || cfg!(feature = "cmake-vs2017-win64") {
+        Some(VS2017)
+    } else if cfg!(feature = "cmake-vs2019") {
+        Some(VS2019)
     } else {
-        // Default generators
-        if cfg!(target_family = "unix") {
-            UNIX_MAKEFILES
-        } else {
-            VS2017_WIN64
-        }
+        None
     };
 
     let stats = if cfg!(feature = "nng-stats") {
@@ -50,13 +45,16 @@ fn link_nng() {
     };
 
     // Run cmake to build nng
-    let dst = cmake::Config::new("nng")
-        .generator(generator.0)
+    let mut config = cmake::Config::new("nng");
+    config
         .define("NNG_TESTS", "OFF")
         .define("NNG_TOOLS", "OFF")
         .define("NNG_ENABLE_STATS", stats)
-        .define("NNG_ENABLE_TLS", tls)
-        .build();
+        .define("NNG_ENABLE_TLS", tls);
+    if let Some(generator) = generator {
+        config.generator(generator.0);
+    }
+    let dst = config.build();
 
     // Check output of `cargo build --verbose`, should see something like:
     // -L native=/path/runng/target/debug/build/runng-sys-abc1234/out

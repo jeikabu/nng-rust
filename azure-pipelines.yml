@@ -10,8 +10,8 @@ strategy:
       imageName: 'macos-10.14'
     vs2017:
       imageName: 'vs2017-win2016'
-    # vs2019:
-    #   imageName: 'windows-2019'
+    vs2019:
+      imageName: 'windows-2019'
 
 pool:
   vmImage: $(imageName)
@@ -21,5 +21,5 @@ steps:
   submodules: recursive
 - pwsh: ./scripts/install_rust.ps1
   displayName: 'Installing Rust'
-- pwsh: ./build.ps1
+- pwsh: ./scripts/build.ps1
   displayName: 'Building/Testing'

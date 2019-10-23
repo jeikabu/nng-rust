@@ -1,7 +1,12 @@
-$ErrorActionPreference = "SilentlyContinue"
+# Non-terminating errors fail the script immediately
+$ErrorActionPreference = "Stop"
 
+if ($IsMacOS) {
+    $env:PATH += [IO.Path]::PathSeparator + "$env:HOME/.cargo/bin"
+}
+
+cargo fmt --all -- --check
 if ($IsWindows) {
-    # Need to redirect stderr because powershell treats as exceptions which fail appveyor
     if ($env:platform -eq "x86") {
         # For 32-bit builds explicitly set the feature to use the correct Visual Studio generator
         if ($env:vs_ver -eq "2017") {
@@ -18,7 +23,6 @@ if ($IsWindows) {
         cargo build --features source-update-bindings
     }
 } elseif ($IsMacOS) {
-    $env:PATH += [IO.Path]::PathSeparator + "$env:HOME/.cargo/bin"
     cargo test --features build-bindgen
     cargo build --features source-update-bindings
 } else {

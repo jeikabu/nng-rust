@@ -14,9 +14,9 @@ Rust FFI bindings to [NNG](https://github.com/nanomsg/nng):
 
 Version of this crate tracks NNG: `<NNG_version>-rc.<crate_version>` (e.g. `1.1.1-rc.2`).
 
-To use the __latest crate__ for the most recent __stable version of NNG__ (1.1.1), in `Cargo.toml`:  
+To use the __latest crate__ for the most recent __stable version of NNG__ (1.2.x), in `Cargo.toml`:  
 ```toml
-nng-sys = "1.1.1-rc"
+nng-sys = "1.2.3-rc"
 ```
 
 Requirements:

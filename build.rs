@@ -93,10 +93,13 @@ fn build_bindgen() {
         // Generate `pub const NNG_UNIT_EVENTS` instead of `nng_unit_enum_NNG_UNIT_EVENTS`
         .prepend_enum_name(false)
         // Generate `pub enum ...` instead of multiple `pub const ...`
-        .default_enum_style(bindgen::EnumVariation::Rust { non_exhaustive: false })
+        .default_enum_style(bindgen::EnumVariation::Rust {
+            non_exhaustive: false,
+        })
         .constified_enum("nng_flag_enum")
         // NNG_ESYSERR and NNG_ETRANERR are used like flag
         .constified_enum("nng_errno_enum")
+        .constified_enum("nng_pipe_ev")
         .use_core()
         .parse_callbacks(Box::new(BindgenCallbacks::default()))
         // Layout tests are non-portable; 64-bit tests are "wrong" size on 32-bit and always fail.

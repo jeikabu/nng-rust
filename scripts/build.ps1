@@ -7,6 +7,9 @@ if ($IsMacOS) {
 
 cargo fmt --all -- --check
 if ($IsWindows) {
+    # Note: currently only VS2019 has clang/llvm installed.  So, VS2017 can't run bindgen.
+    # https://github.com/microsoft/azure-pipelines-image-generation/pull/1297
+
     if ($env:platform -eq "x86") {
         # For 32-bit builds explicitly set the feature to use the correct Visual Studio generator
         if ($env:vs_ver -eq "2017") {
@@ -18,9 +21,17 @@ if ($IsWindows) {
             cargo test
         }
     } else {
-        # For 64-bit builds auto-detect correct generator but rebuild bindings from source
-        cargo test --features build-bindgen
-        cargo build --features source-update-bindings
+        # For 64-bit builds auto-detect correct generator
+        if ($env:vs_ver -eq "2019") {
+            # Have clang/llvm, so can run bindgen
+            $env:LIBCLANG_PATH = "$env:VCINSTALLDIR/Tools/Llvm/bin"
+            cargo test --features build-bindgen
+            cargo build --features source-update-bindings
+        }
+        else {
+            # No clang/llvm, so can't run bindgen
+            cargo test
+        }
     }
 } elseif ($IsMacOS) {
     cargo test --features build-bindgen

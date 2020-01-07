@@ -8,15 +8,15 @@ Rust FFI bindings to [NNG](https://github.com/nanomsg/nng):
 ![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Rustc 1.31+](https://img.shields.io/badge/rustc-1.31+-lightgray.svg)
 [![travis](https://travis-ci.org/jeikabu/nng-rust.svg?branch=master)](https://travis-ci.org/jeikabu/nng-rust)
-[![appveyor](https://ci.appveyor.com/api/projects/status/96x8onexj6vyxgjp/branch/master?svg=true)](https://ci.appveyor.com/project/jake-ruyi/nng-rust/branch/master)
+[![appveyor](https://ci.appveyor.com/api/projects/status/10fg3vxtk13rqy93/branch/master?svg=true)](https://ci.appveyor.com/project/jeikabu/nng-rust/branch/master)
 
 ## Usage
 
 Version of this crate tracks NNG: `<NNG_version>-rc.<crate_version>` (e.g. `1.1.1-rc.2`).
 
-To use the __latest crate__ for the most recent __stable version of NNG__ (1.1.1), in `Cargo.toml`:  
+To use the __latest crate__ for the most recent __stable version of NNG__ (1.2.x), in `Cargo.toml`:  
 ```toml
-nng-sys = "1.1.1-rc"
+nng-sys = "1.2.3-rc"
 ```
 
 Requirements:
@@ -31,7 +31,7 @@ Requirements:
 - `build-bindgen`: run bindgen to re-generate Rust FFI bindings to C
 - `cmake-unix`: use cmake generator "Unix Makefiles" (default on Linux/macOS)
 - `cmake-ninja`: use cmake generator "Ninja"
-- `cmake-vs2017`: use cmake generator "Visual Studio 15 2017" (default on Windows)
+- `cmake-vs2017`: use cmake generator "Visual Studio 15 2017"
 - `cmake-vs2019`: use cmake generator "Visual Studio 16 2019"
 - `nng-stats`: enable NNG stats `NNG_ENABLE_STATS` (enabled by default)
 - `nng-tls`: enable TLS `NNG_ENABLE_TLS` (requires mbedTLS)

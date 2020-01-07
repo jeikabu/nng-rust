@@ -1,1 +1,1 @@
-#include "../nng/src/compat/nanomsg/nn.h"
+#include "nng/compat/nanomsg/nn.h"

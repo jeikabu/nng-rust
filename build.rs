@@ -1,6 +1,14 @@
 fn main() {
+    cfg();
     link_nng();
     build_bindgen();
+}
+
+fn cfg() {
+    match version_check::is_min_version("1.34.0") {
+        Some((true, _version)) => println!("cargo:rustc-cfg=try_from"),
+        _ => {}
+    }
 }
 
 #[cfg(feature = "build-nng")]
@@ -13,20 +21,15 @@ fn link_nng() {
 
     // Compile time settings
     let generator = if cfg!(feature = "cmake-unix") {
-        UNIX_MAKEFILES
+        Some(UNIX_MAKEFILES)
     } else if cfg!(feature = "cmake-ninja") {
-        NINJA
+        Some(NINJA)
     } else if cfg!(feature = "cmake-vs2017") || cfg!(feature = "cmake-vs2017-win64") {
-        VS2017
+        Some(VS2017)
     } else if cfg!(feature = "cmake-vs2019") {
-        VS2019
+        Some(VS2019)
     } else {
-        // Default generators
-        if cfg!(target_family = "unix") {
-            UNIX_MAKEFILES
-        } else {
-            VS2017
-        }
+        None
     };
 
     let stats = if cfg!(feature = "nng-stats") {
@@ -42,13 +45,16 @@ fn link_nng() {
     };
 
     // Run cmake to build nng
-    let dst = cmake::Config::new("nng")
-        .generator(generator.0)
+    let mut config = cmake::Config::new("nng");
+    config
         .define("NNG_TESTS", "OFF")
         .define("NNG_TOOLS", "OFF")
         .define("NNG_ENABLE_STATS", stats)
-        .define("NNG_ENABLE_TLS", tls)
-        .build();
+        .define("NNG_ENABLE_TLS", tls);
+    if let Some(generator) = generator {
+        config.generator(generator.0);
+    }
+    let dst = config.build();
 
     // Check output of `cargo build --verbose`, should see something like:
     // -L native=/path/runng/target/debug/build/runng-sys-abc1234/out
@@ -76,7 +82,7 @@ fn build_bindgen() {
 
     let mut builder = bindgen::Builder::default()
         // This is needed if use `#include <nng.h>` instead of `#include "path/nng.h"` in wrapper.h
-        //.clang_arg("-Inng/src/")
+        .clang_arg("-Inng/include/")
         .header("src/wrapper.h")
         // #[derive(Default)]
         .derive_default(true)
@@ -87,10 +93,13 @@ fn build_bindgen() {
         // Generate `pub const NNG_UNIT_EVENTS` instead of `nng_unit_enum_NNG_UNIT_EVENTS`
         .prepend_enum_name(false)
         // Generate `pub enum ...` instead of multiple `pub const ...`
-        .default_enum_style(bindgen::EnumVariation::Rust)
+        .default_enum_style(bindgen::EnumVariation::Rust {
+            non_exhaustive: false,
+        })
         .constified_enum("nng_flag_enum")
         // NNG_ESYSERR and NNG_ETRANERR are used like flag
         .constified_enum("nng_errno_enum")
+        .constified_enum("nng_pipe_ev")
         .use_core()
         .parse_callbacks(Box::new(BindgenCallbacks::default()))
         // Layout tests are non-portable; 64-bit tests are "wrong" size on 32-bit and always fail.

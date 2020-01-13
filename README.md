@@ -8,7 +8,7 @@ Rust FFI bindings to [NNG](https://github.com/nanomsg/nng):
 ![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Rustc 1.31+](https://img.shields.io/badge/rustc-1.31+-lightgray.svg)
 [![travis](https://travis-ci.org/jeikabu/nng-rust.svg?branch=master)](https://travis-ci.org/jeikabu/nng-rust)
-[![appveyor](https://ci.appveyor.com/api/projects/status/10fg3vxtk13rqy93/branch/master?svg=true)](https://ci.appveyor.com/project/jeikabu/nng-rust/branch/master)
+[![Build Status](https://dev.azure.com/jeikabu/nng-rust/_apis/build/status/jeikabu.nng-rust?branchName=master)](https://dev.azure.com/jeikabu/nng-rust/_build/latest?definitionId=1&branchName=master)
 
 ## Usage
 
@@ -16,13 +16,14 @@ Version of this crate tracks NNG: `<NNG_version>-rc.<crate_version>` (e.g. `1.1.
 
 To use the __latest crate__ for the most recent __stable version of NNG__ (1.2.x), in `Cargo.toml`:  
 ```toml
-nng-sys = "1.2.3-rc"
+[dependencies]
+nng-sys = "1.2.4-rc"
 ```
 
 Requirements:
 - [cmake](https://cmake.org/) in `PATH`
     - On Linux/macOS: default generator is "Unix Makefiles"
-    - On Windows: default generator is "Visual Studio 15 2017 Win64"
+    - On Windows: default generator is generally latest version of Visual Studio installed
 - _Optional_ libclang needed if using `build-bindgen` feature to run [bindgen](https://rust-lang.github.io/rust-bindgen/requirements.html)
 
 ## Features
@@ -41,13 +42,13 @@ Requirements:
 _Example_) Re-generate FFI bindings with bindgen:
 ```toml
 [dependencies]
-nng-sys = { version = "1.1.1-rc", features = ["build-bindgen"] }
+nng-sys = { version = "1.2.4-rc", features = ["build-bindgen"] }
 ```
 
 _Example_) Disable stats and use Ninja cmake generator:
 ```toml
 [dependencies.nng-sys]
-version = "1.1.1-rc"
+version = "1.2.4-rc"
 default-features = false
 features = ["cmake-ninja"]
 ```

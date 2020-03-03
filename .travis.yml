@@ -2,9 +2,11 @@ language: rust
 rust:
   - stable
 
-os:
-  - linux
-  - osx
+matrix:
+  include:
+    - os: osx
+    - os: linux
+      dist: bionic
 
 # Need travis full VM otherwise kcov fails
 sudo: required
@@ -12,17 +14,16 @@ addons:
   apt:
     packages:
       - cmake
+  snaps:
+    - name: powershell
+      confinement: classic
+  homebrew:
+    casks:
+      - powershell
+    update: true
 
-before_script:
-  - rustup component add clippy
-  - rustup component add rustfmt
+install:
+  - pwsh ./scripts/install.ps1
 
 script:
-  # Check source code formatting
-  - cargo fmt --all -- --check
-  #- cargo clippy
-  - cargo build --all --all-targets
-  # Build everything (including optional packages)
-  - cargo build --all --features "build-bindgen no_std" --all-targets
-  - RUST_BACKTRACE=1 cargo test
-  - cargo build --features source-update-bindings
+  - pwsh ./scripts/build.ps1

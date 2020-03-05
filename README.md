@@ -14,14 +14,14 @@ Rust FFI bindings to [NNG](https://github.com/nanomsg/nng):
 
 Version of this crate tracks NNG: `<NNG_version>-rc.<crate_version>` (e.g. `1.1.1-rc.2`).
 
-To use the __latest crate__ for the most recent __stable version of NNG__ (1.2.x), in `Cargo.toml`:  
+To use the __latest crate__ for the most recent __stable version of NNG__ (1.3.x), in `Cargo.toml`:  
 ```toml
 [dependencies]
-nng-sys = "1.2.4-rc"
+nng-sys = "1.3.0-rc"
 ```
 
 Requirements:
-- [cmake](https://cmake.org/) in `PATH`
+- [cmake](https://cmake.org/) v3.13 or newer in `PATH`
     - On Linux/macOS: default generator is "Unix Makefiles"
     - On Windows: default generator is generally latest version of Visual Studio installed
 - _Optional_ libclang needed if using `build-bindgen` feature to run [bindgen](https://rust-lang.github.io/rust-bindgen/requirements.html)
@@ -42,13 +42,13 @@ Requirements:
 _Example_) Re-generate FFI bindings with bindgen:
 ```toml
 [dependencies]
-nng-sys = { version = "1.2.4-rc", features = ["build-bindgen"] }
+nng-sys = { version = "1.3.0-rc", features = ["build-bindgen"] }
 ```
 
 _Example_) Disable stats and use Ninja cmake generator:
 ```toml
 [dependencies.nng-sys]
-version = "1.2.4-rc"
+version = "1.3.0-rc"
 default-features = false
 features = ["cmake-ninja"]
 ```

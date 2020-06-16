@@ -1,6 +1,6 @@
 [package]
 name = "nng-sys"
-version = "1.3.0-rc.1"
+version = "1.3.1-rc.1"
 authors = ["Nathan Kent <nate@nkent.net>", "Jake W <jeikabu@gmail.com>"]
 
 description = "Bindings to NNG (Nanomsg-Next-Generation) aka Nanomsg2"
@@ -45,9 +45,9 @@ source-update-bindings = ["build-bindgen"]
 cty = {version = "0.2", optional = true}
 
 [build-dependencies]
-cmake = {version = "^0.1.36", optional = true}
-bindgen = {version = "0.52", optional = true}
-version_check = "0.1"
+cmake = {version = "0.1.44", optional = true}
+bindgen = {version = "0.54", optional = true}
+version_check = "0.9"
 
 [package.metadata.docs.rs]
 all-features = false

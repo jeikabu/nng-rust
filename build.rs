@@ -6,7 +6,7 @@ fn main() {
 
 fn cfg() {
     match version_check::is_min_version("1.34.0") {
-        Some((true, _version)) => println!("cargo:rustc-cfg=try_from"),
+        Some(true) => println!("cargo:rustc-cfg=try_from"),
         _ => {}
     }
 }

@@ -102,6 +102,7 @@ fn build_bindgen() {
         .constified_enum("nng_pipe_ev")
         .use_core()
         .parse_callbacks(Box::new(BindgenCallbacks::default()))
+        .size_t_is_usize(true)
         // Layout tests are non-portable; 64-bit tests are "wrong" size on 32-bit and always fail.
         // Don't output tests if we're regenerating `src/bindings.rs` (shared by all platforms when bindgen not used)
         .layout_tests(!cfg!(feature = "source-update-bindings"));
@@ -154,6 +155,9 @@ impl bindgen::callbacks::ParseCallbacks for BindgenCallbacks {
         // nng_pipe_ev::NNG_PIPE_EV_NUM is only used in NNG internals to validate range of values.
         // We want to exclude it so it doesn't need to be included for `match` to be exhaustive.
         if original_variant_name == "NNG_PIPE_EV_NUM" {
+            Some(bindgen::callbacks::EnumVariantCustomBehavior::Hide)
+        // NNG abstract sockets are only supported on Linux and non-portable
+        } else if original_variant_name == "NNG_AF_ABSTRACT" {
             Some(bindgen::callbacks::EnumVariantCustomBehavior::Hide)
         } else {
             None
